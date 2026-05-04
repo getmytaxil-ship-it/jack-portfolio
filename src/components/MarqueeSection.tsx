@@ -9,7 +9,7 @@ const row1Images = [
   'https://motionsites.ai/assets/hero-vex-ventures-preview-BczMFIiw.gif',
   'https://motionsites.ai/assets/hero-stellar-ai-v2-preview-DjvxjG3C.gif',
   'https://motionsites.ai/assets/hero-asme-preview-B_nGDnTP.gif',
-  null,
+  null, // ← Urban Jungle tile
   'https://motionsites.ai/assets/hero-vitara-preview-Cjz2QYyU.gif',
   'https://motionsites.ai/assets/hero-terra-preview-BFjrCr7T.gif',
   'https://motionsites.ai/assets/hero-skyelite-preview-DHaZIgUv.gif',
@@ -30,10 +30,10 @@ const row2Images = [
   'https://motionsites.ai/assets/hero-celestia-preview-0yO3jXO8.gif',
 ]
 
-const row1 = [...row1Images, ...row1Images, ...row1Images]
-const row2 = [...row2Images, ...row2Images, ...row2Images]
+// לדסקטופ — משולשים ללולאה חלקה
+const row1Desktop = [...row1Images, ...row1Images, ...row1Images]
+const row2Desktop = [...row2Images, ...row2Images, ...row2Images]
 
-// גודל tile לפי גודל מסך — קטן במובייל, מלא בדסקטופ
 function useTileSize() {
   const [size, setSize] = useState({ w: 420, h: 270 })
   useEffect(() => {
@@ -49,12 +49,50 @@ function useTileSize() {
   return size
 }
 
+// ── Tile יחיד ────────────────────────────────────────────────────────────────
+function Tile({
+  src,
+  isUrban,
+  w,
+  h,
+  rounded,
+}: {
+  src: string | null
+  isUrban: boolean
+  w: number
+  h: number
+  rounded: string
+}) {
+  if (isUrban) {
+    return (
+      <div className={`flex-shrink-0 ${rounded}`} style={{ width: w, height: h }}>
+        <UrbanJungleTile width={w} height={h} />
+      </div>
+    )
+  }
+  return (
+    <img
+      src={src!}
+      alt=""
+      loading="lazy"
+      className={`flex-shrink-0 object-cover ${rounded}`}
+      style={{ width: w, height: h }}
+    />
+  )
+}
+
 export default function MarqueeSection() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const [offset, setOffset] = useState(200)
   const { w, h } = useTileSize()
+  const isMobile = w < 340
 
+  const gap = isMobile ? 8 : 12
+  const rounded = isMobile ? 'rounded-xl' : 'rounded-2xl'
+
+  // גלילה-מניעה — רק בדסקטופ
   useEffect(() => {
+    if (isMobile) return
     const handleScroll = () => {
       if (!sectionRef.current) return
       const sectionTop =
@@ -66,56 +104,107 @@ export default function MarqueeSection() {
     window.addEventListener('scroll', handleScroll, { passive: true })
     handleScroll()
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [isMobile])
 
-  const tileStyle = { width: `${w}px`, height: `${h}px` }
-  const gap = w < 350 ? '8px' : '12px'
+  // ── מובייל: גרירה חופשית עם האצבע ────────────────────────────────────────
+  if (isMobile) {
+    return (
+      <section
+        ref={sectionRef}
+        className="bg-[#0C0C0C] pt-16 pb-6"
+        dir="ltr"
+      >
+        {/* הוראה קצרה */}
+        <p className="text-white/25 text-[10px] text-center mb-3 tracking-widest uppercase">
+          החלק לצפייה
+        </p>
 
+        {/* שורה 1 — גרירה שמאלה/ימינה */}
+        <div
+          className="overflow-x-auto scrollbar-hide mb-2"
+          style={{ paddingInline: 16, cursor: 'grab' }}
+        >
+          <div className="flex" style={{ gap, width: 'max-content' }}>
+            {row1Images.map((src, i) => (
+              <Tile
+                key={i}
+                src={src}
+                isUrban={i === EARTH_INDEX}
+                w={w}
+                h={h}
+                rounded={rounded}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* שורה 2 — גרירה שמאלה/ימינה */}
+        <div
+          className="overflow-x-auto scrollbar-hide"
+          style={{ paddingInline: 16, cursor: 'grab' }}
+        >
+          <div className="flex" style={{ gap, width: 'max-content' }}>
+            {row2Images.map((src, i) => (
+              <Tile
+                key={i}
+                src={src}
+                isUrban={false}
+                w={w}
+                h={h}
+                rounded={rounded}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  // ── דסקטופ/טאבלט: פרלקס עם גלילה ────────────────────────────────────────
   return (
     <section
       ref={sectionRef}
-      className="bg-[#0C0C0C] pt-16 sm:pt-24 md:pt-32 lg:pt-40 pb-6 sm:pb-10 overflow-hidden"
+      className="bg-[#0C0C0C] pt-24 sm:pt-32 md:pt-40 pb-6 sm:pb-10 overflow-hidden"
       dir="ltr"
     >
       {/* שורה 1 — נעה ימינה */}
       <div
         className="flex mb-2 sm:mb-3"
-        style={{ gap, transform: `translateX(${offset - 200}px)`, willChange: 'transform' }}
+        style={{
+          gap,
+          transform: `translateX(${offset - 200}px)`,
+          willChange: 'transform',
+        }}
       >
-        {row1.map((src, i) => {
-          if (i % row1Images.length === EARTH_INDEX) {
-            return (
-              <div key={`urban-${i}`} className="flex-shrink-0" style={tileStyle}>
-                <UrbanJungleTile width={w} height={h} />
-              </div>
-            )
-          }
-          return (
-            <img
-              key={i}
-              src={src!}
-              alt=""
-              loading="lazy"
-              className="rounded-xl sm:rounded-2xl object-cover flex-shrink-0"
-              style={tileStyle}
-            />
-          )
-        })}
+        {row1Desktop.map((src, i) => (
+          <Tile
+            key={i}
+            src={src}
+            isUrban={i % row1Images.length === EARTH_INDEX}
+            w={w}
+            h={h}
+            rounded={rounded}
+          />
+        ))}
       </div>
 
       {/* שורה 2 — נעה שמאלה */}
       <div
         className="flex"
-        style={{ gap, transform: `translateX(${-(offset - 200)}px)`, willChange: 'transform' }}
+        style={{
+          gap,
+          transform: `translateX(${-(offset - 200)}px)`,
+          willChange: 'transform',
+        }}
       >
-        {row2.map((src, i) => (
-          <img
+        {row2Desktop.map((src, i) => (
+          <Tile
             key={i}
             src={src}
-            alt=""
-            loading="lazy"
-            className="rounded-xl sm:rounded-2xl object-cover flex-shrink-0"
-            style={tileStyle}
+            isUrban={false}
+            w={w}
+            h={h}
+            rounded={rounded}
           />
         ))}
       </div>
