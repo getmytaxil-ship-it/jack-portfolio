@@ -1,103 +1,191 @@
-import FadeIn from './FadeIn'
-import Magnet from './Magnet'
-import ContactButton from './ContactButton'
+import { lazy, Suspense } from 'react'
+import { motion } from 'framer-motion'
 
-const PORTRAIT =
-  'https://shrug-person-78902957.figma.site/_components/v2/d24c01ad3a56fc65e942a1f501eb73db42d7cf9a/Rectangle_40443.81459862.png'
+const Spline = lazy(() => import('@splinetool/react-spline'))
+
+const SPLINE_SCENE = 'https://prod.spline.design/Slk6b8kz3LRlKiyk/scene.splinecode'
+const HEEBO: React.CSSProperties = { fontFamily: '"Heebo", sans-serif' }
+
+const PURPLE_BTN: React.CSSProperties = {
+  ...HEEBO,
+  background:
+    'linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)',
+  boxShadow:
+    '0px 4px 4px rgba(181,1,167,0.25), 4px 4px 12px #7721B1 inset',
+  outline: '2px solid white',
+  outlineOffset: '-3px',
+}
 
 const navLinks = [
-  { label: 'אודות',    href: '#about' },
-  { label: 'מחירים',   href: '#price' },
-  { label: 'פרויקטים', href: '#projects' },
-  { label: 'צור קשר',  href: '#contact' },
+  { label: 'אודות',    href: '#about'    },
+  { label: 'שירותים',  href: '#services'  },
+  { label: 'פרויקטים', href: '#projects'  },
+  { label: 'צור קשר',  href: '#contact'  },
 ]
+
+const up = (delay: number) => ({
+  initial:    { opacity: 0, y: 22, filter: 'blur(5px)' },
+  animate:    { opacity: 1, y: 0,  filter: 'blur(0px)' },
+  transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] as const, delay },
+})
 
 export default function HeroSection() {
   return (
     <section
-      className="h-screen flex flex-col relative"
-      style={{ overflowX: 'clip' }}
+      className="relative min-h-screen flex items-end bg-[#080808] overflow-hidden"
+      dir="ltr"
     >
-      {/* ── ניווט ────────────────────────────────────────────────────────── */}
-      <FadeIn delay={0} y={-20}>
-        <nav className="flex justify-between items-center px-4 sm:px-6 md:px-10 pt-5 sm:pt-6 md:pt-8">
-          {/* לוגו */}
-          <span
-            className="text-white font-black text-lg sm:text-xl tracking-tight select-none"
-            style={{ fontFamily: '"Heebo", sans-serif' }}
-          >
-            ג׳ק.
-          </span>
-
-          {/* קישורי ניווט */}
-          <ul className="flex gap-3 sm:gap-5 md:gap-8">
-            {navLinks.map(({ label, href }) => (
-              <li key={label}>
-                <a
-                  href={href}
-                  className="text-[#D7E2EA] font-medium uppercase tracking-wider text-[10px] sm:text-sm md:text-base hover:opacity-70 transition-opacity duration-200 whitespace-nowrap"
-                  style={{ fontFamily: '"Heebo", sans-serif' }}
-                >
-                  {label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </FadeIn>
-
-      {/* ── כותרת ענקית ─────────────────────────────────────────────────── */}
-      <div className="overflow-hidden">
-        <FadeIn delay={0.15} y={40}>
-          <h1
-            className="hero-heading font-black uppercase tracking-tight leading-none whitespace-nowrap w-full mt-4 sm:mt-4 md:-mt-5"
-            style={{
-              fontSize: 'clamp(13vw, 16vw, 17.5vw)',
-              fontFamily: '"Heebo", sans-serif',
-            }}
-          >
-            היי, אני ג׳ק
-          </h1>
-        </FadeIn>
+      {/* ── Spline 3D background ──────────────────────────────────────────── */}
+      <div className="absolute inset-0 z-0">
+        <Suspense fallback={<div className="absolute inset-0 bg-[#080808]" />}>
+          <Spline scene={SPLINE_SCENE} className="w-full h-full" />
+        </Suspense>
       </div>
 
-      {/* ── פורטרט — אבסולוטי מרכז-תחתון, זז עם עכבר ───────────────────── */}
-      <FadeIn
-        delay={0.6}
-        y={30}
-        className="absolute left-1/2 -translate-x-1/2 z-10
-                   top-1/2 -translate-y-1/2
-                   sm:top-auto sm:translate-y-0 sm:bottom-0"
-      >
-        <Magnet
-          padding={150}
-          strength={3}
-          activeTransition="transform 0.3s ease-out"
-          inactiveTransition="transform 0.6s ease-in-out"
+      {/* ── Gradient overlay ─────────────────────────────────────────────── */}
+      <div
+        className="absolute inset-0 z-[1] pointer-events-none"
+        style={{
+          background: [
+            'linear-gradient(to right, rgba(8,8,8,0.97) 0%, rgba(8,8,8,0.80) 35%, rgba(8,8,8,0.28) 62%, transparent 100%)',
+            'linear-gradient(to top, rgba(8,8,8,0.90) 0%, rgba(8,8,8,0.35) 28%, transparent 55%)',
+          ].join(', '),
+        }}
+      />
+
+      {/* ── Navbar ────────────────────────────────────────────────────────── */}
+      <nav className="absolute top-0 left-0 right-0 z-50 flex justify-between items-center px-6 sm:px-10 md:px-14 py-5">
+        <motion.span
+          className="text-white font-black text-xl tracking-tight select-none"
+          style={HEEBO}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <img
-            src={PORTRAIT}
-            alt="ג׳ק"
-            className="w-[220px] sm:w-[360px] md:w-[440px] lg:w-[520px] object-contain"
-            draggable={false}
-          />
-        </Magnet>
-      </FadeIn>
+          ג׳ק.
+        </motion.span>
 
-      {/* ── שורה תחתונה ──────────────────────────────────────────────────── */}
-      <div className="mt-auto flex justify-between items-end pb-5 sm:pb-8 md:pb-10 px-4 sm:px-6 md:px-10 relative z-20">
-        <FadeIn delay={0.35} y={20}>
-          <p
-            className="text-[#D7E2EA] font-medium text-xs sm:text-sm md:text-base max-w-[160px] sm:max-w-[220px] leading-snug"
-            style={{ fontFamily: '"Heebo", sans-serif' }}
+        <motion.ul
+          className="hidden md:flex gap-7 lg:gap-10"
+          dir="rtl"
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, delay: 0.18 }}
+        >
+          {navLinks.map(({ label, href }) => (
+            <li key={label}>
+              <a
+                href={href}
+                className="text-white/50 hover:text-white transition-colors duration-200 text-sm uppercase tracking-widest"
+                style={HEEBO}
+              >
+                {label}
+              </a>
+            </li>
+          ))}
+        </motion.ul>
+
+        <motion.a
+          href="#contact"
+          className="hidden md:inline-flex rounded-full text-white font-medium text-xs uppercase tracking-widest px-7 py-2.5 cursor-pointer hover:opacity-80 transition-opacity"
+          style={PURPLE_BTN}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.24 }}
+        >
+          צור קשר
+        </motion.a>
+      </nav>
+
+      {/* ── Hero content — bottom-left ────────────────────────────────────── */}
+      <div
+        className="relative z-10 pointer-events-none w-full max-w-[92%] sm:max-w-lg lg:max-w-[680px] px-6 sm:px-10 md:px-14 pb-12 sm:pb-16 md:pb-24 pt-28"
+      >
+        {/* Eyebrow */}
+        <motion.p
+          dir="rtl"
+          className="text-white/30 text-[10px] uppercase tracking-[0.35em] mb-5"
+          style={HEEBO}
+          {...up(0.28)}
+        >
+          סטודיו לעיצוב ופיתוח דיגיטלי
+        </motion.p>
+
+        {/* Main heading */}
+        <motion.h1
+          dir="rtl"
+          style={{
+            ...HEEBO,
+            fontWeight: 900,
+            fontSize: 'clamp(2.9rem, 7.2vw, 6.8rem)',
+            lineHeight: 0.93,
+            letterSpacing: '-0.03em',
+          }}
+          className="text-white mb-5 md:mb-7"
+          {...up(0.38)}
+        >
+          בונים אתרים<br />
+          <span
+            style={{
+              background: 'linear-gradient(135deg, #d42fcc 0%, #7621B0 65%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}
           >
-            יוצר תלת-מימד שמונע על ידי יצירה
-          </p>
-        </FadeIn>
+            שמשנים עסקים.
+          </span>
+        </motion.h1>
 
-        <FadeIn delay={0.5} y={20}>
-          <ContactButton />
-        </FadeIn>
+        {/* Subheading */}
+        <motion.p
+          dir="rtl"
+          className="text-white/70 mb-4 md:mb-6"
+          style={{ ...HEEBO, fontWeight: 300, fontSize: 'clamp(1rem, 2vw, 1.45rem)' }}
+          {...up(0.50)}
+        >
+          מעיצוב פיקסל-פרפקט ועד סוכני AI — פתרון דיגיטלי מלא.
+        </motion.p>
+
+        {/* Description */}
+        <motion.p
+          dir="rtl"
+          className="text-white/40 mb-8 md:mb-11 max-w-[480px] leading-relaxed"
+          style={{ ...HEEBO, fontWeight: 300, fontSize: 'clamp(0.82rem, 1.35vw, 1rem)' }}
+          {...up(0.62)}
+        >
+          אנחנו בונים אתרים שממירים, מטמיעים סוכני AI שחוסכים שעות עבודה,
+          ומעצבים חוויות דיגיטליות שגורמות ללקוחות לחזור. מהרעיון ועד
+          ההשקה — הכל תחת קורת גג אחת.
+        </motion.p>
+
+        {/* CTAs */}
+        <motion.div className="flex flex-wrap gap-3 pointer-events-auto" {...up(0.74)}>
+          <a
+            href="#contact"
+            className="rounded-full text-white font-semibold text-sm px-8 py-3.5 cursor-pointer hover:opacity-85 active:scale-[0.97] transition-all"
+            style={{ ...PURPLE_BTN }}
+          >
+            בואו נדבר
+          </a>
+          <a
+            href="#projects"
+            className="rounded-full border border-white/20 text-white/70 hover:text-white hover:border-white/50 font-medium text-sm px-8 py-3.5 cursor-pointer transition-colors duration-200"
+            style={HEEBO}
+          >
+            ראה עבודות
+          </a>
+        </motion.div>
+
+        {/* Trust line */}
+        <motion.p
+          dir="rtl"
+          className="text-white/22 text-[11px] mt-6 md:mt-8"
+          style={HEEBO}
+          {...up(0.88)}
+        >
+          מעל 50 פרויקטים • לקוחות מרוצים • תוצאות מדידות
+        </motion.p>
       </div>
     </section>
   )
