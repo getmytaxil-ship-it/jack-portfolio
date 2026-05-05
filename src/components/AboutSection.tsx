@@ -161,7 +161,7 @@ export default function AboutSection() {
 
           {/* פילים */}
           <motion.div className="pointer-events-auto" {...fadeUp(0.44)}>
-            <div className="flex flex-wrap gap-2 bg-white/8 backdrop-blur-md rounded-2xl p-2 border border-white/5">
+            <div className="flex flex-wrap gap-2 bg-white/8 rounded-2xl p-2 border border-white/5">
               {pills.map(({ text, active }) =>
                 active ? (
                   <span key={text} className="px-3 sm:px-4 py-2 text-[10px] tracking-widest bg-white text-black rounded-full font-semibold" style={MONO}>
