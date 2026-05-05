@@ -104,7 +104,7 @@ export default function AboutSection() {
             }}
             {...fadeUp(0.08)}
           >
-            ג׳ק<br />סטודיו •
+            Nova<br />Digital •
           </motion.h2>
 
           {/* פסקת אודות */}
