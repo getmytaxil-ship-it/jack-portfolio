@@ -43,12 +43,12 @@ const row1Desktop = [...row1Images, ...row1Images, ...row1Images]
 const row2Desktop = [...row2Images, ...row2Images, ...row2Images]
 
 function useTileSize() {
-  const [size, setSize] = useState({ w: 420, h: 270 })
+  const [size, setSize] = useState({ w: 540, h: 346 })
   useEffect(() => {
     const update = () => {
-      if (window.innerWidth < 640) setSize({ w: 260, h: 167 })
-      else if (window.innerWidth < 1024) setSize({ w: 340, h: 218 })
-      else setSize({ w: 420, h: 270 })
+      if (window.innerWidth < 640) setSize({ w: 280, h: 180 })
+      else if (window.innerWidth < 1024) setSize({ w: 400, h: 257 })
+      else setSize({ w: 540, h: 346 })
     }
     update()
     window.addEventListener('resize', update, { passive: true })
@@ -111,7 +111,7 @@ export default function MarqueeSection() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const [offset, setOffset] = useState(200)
   const { w, h } = useTileSize()
-  const isMobile = w < 340
+  const isMobile = w < 340  // mobile breakpoint stays at original threshold
 
   const gap = isMobile ? 8 : 12
   const rounded = isMobile ? 'rounded-xl' : 'rounded-2xl'
@@ -178,7 +178,7 @@ export default function MarqueeSection() {
   return (
     <section
       ref={sectionRef}
-      className="bg-[#0C0C0C] pt-24 sm:pt-32 md:pt-40 pb-6 sm:pb-10 overflow-hidden"
+      className="bg-[#0C0C0C] pt-6 sm:pt-8 md:pt-12 pb-6 sm:pb-10 overflow-hidden"
       dir="ltr"
     >
       <div
