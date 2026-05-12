@@ -3,10 +3,13 @@ import UrbanJungleTile from './UrbanJungleTile'
 
 const EARTH_INDEX = 5
 
-// Video overrides — index in row1Images → local video path
+// Video overrides — index → local video path
 const VIDEO_MAP_ROW1: Record<number, string> = {
-  0: `${import.meta.env.BASE_URL}videos/tile_01.mp4`, // screen recording
-  5: `${import.meta.env.BASE_URL}videos/tile_02.mp4`, // replaces UrbanJungle
+  0: `${import.meta.env.BASE_URL}videos/tile_01.mp4`,
+  5: `${import.meta.env.BASE_URL}videos/tile_02.mp4`,
+}
+const VIDEO_MAP_ROW2: Record<number, string> = {
+  0: `${import.meta.env.BASE_URL}videos/tile_03.mp4`,
 }
 
 const row1Images = [
@@ -159,6 +162,7 @@ export default function MarqueeSection() {
                 key={i}
                 src={src}
                 isUrban={false}
+                videoSrc={VIDEO_MAP_ROW2[i]}
                 w={w}
                 h={h}
                 rounded={rounded}
@@ -201,16 +205,20 @@ export default function MarqueeSection() {
         className="flex"
         style={{ gap, transform: `translateX(${-(offset - 200)}px)`, willChange: 'transform' }}
       >
-        {row2Desktop.map((src, i) => (
-          <Tile
-            key={i}
-            src={src}
-            isUrban={false}
-            w={w}
-            h={h}
-            rounded={rounded}
-          />
-        ))}
+        {row2Desktop.map((src, i) => {
+          const idx = i % row2Images.length
+          return (
+            <Tile
+              key={i}
+              src={src}
+              isUrban={false}
+              videoSrc={VIDEO_MAP_ROW2[idx]}
+              w={w}
+              h={h}
+              rounded={rounded}
+            />
+          )
+        })}
       </div>
     </section>
   )

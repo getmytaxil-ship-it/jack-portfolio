@@ -99,15 +99,15 @@ function HeroBg() {
 export default function HeroSection() {
   return (
     <section
-      className="relative min-h-[100svh] flex flex-col bg-[#08080e] overflow-hidden"
+      className="relative min-h-[100svh] flex flex-col justify-center md:justify-end bg-[#08080e] overflow-hidden"
       dir="ltr"
     >
       <HeroBg />
 
-      {/* ── Navbar ──────────────────────────────────────────────────────────── */}
+      {/* ── Navbar — absolute so it doesn't affect vertical content flow ───── */}
       <nav
         dir="ltr"
-        className="relative z-20 flex justify-between items-center px-5 sm:px-8 md:px-14 py-5 shrink-0"
+        className="absolute top-0 left-0 right-0 z-50 flex justify-between items-center px-5 sm:px-8 md:px-14 py-5"
       >
         <motion.div
           className="flex items-baseline gap-[3px] select-none"
@@ -151,17 +151,16 @@ export default function HeroSection() {
         </motion.a>
       </nav>
 
-      {/* ── Spacer — pushes content to bottom ───────────────────────────────── */}
-      <div className="flex-1 min-h-[2rem]" />
-
-      {/* ── Hero content — ml-auto pushes it to the RIGHT (Hebrew RTL side) ── */}
+      {/* ── Hero content ─────────────────────────────────────────────────────
+           Mobile: justify-center centres it vertically + pt-24 clears the nav
+           Desktop: justify-end keeps it at bottom, ml-auto pushes it RIGHT     */}
       <div
         dir="rtl"
         className={[
           'relative z-10 pointer-events-none w-full ml-auto',
           'md:max-w-[50%] lg:max-w-[46%] xl:max-w-[42%]',
           'md:pr-14 md:pl-6 md:pb-16 lg:pb-20',
-          'px-5 pb-10 sm:px-8 sm:pb-12',
+          'px-5 pt-24 pb-10 sm:px-8 sm:pt-28 sm:pb-12 md:pt-0',
         ].join(' ')}
       >
         {/* Eyebrow */}
