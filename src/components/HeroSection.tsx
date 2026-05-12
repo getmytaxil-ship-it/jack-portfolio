@@ -1,9 +1,5 @@
-import { lazy, Suspense, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 
-const Spline = lazy(() => import('@splinetool/react-spline'))
-
-const SPLINE_SCENE = 'https://prod.spline.design/Slk6b8kz3LRlKiyk/scene.splinecode'
 const HEEBO: React.CSSProperties = { fontFamily: '"Heebo", sans-serif' }
 
 const PURPLE_BTN: React.CSSProperties = {
@@ -24,105 +20,117 @@ const navLinks = [
 ]
 
 const up = (delay: number) => ({
-  initial:    { opacity: 0, y: 18 },
+  initial:    { opacity: 0, y: 16 },
   animate:    { opacity: 1, y: 0  },
-  transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] as const, delay },
+  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const, delay },
 })
 
-function useIsDesktop() {
-  const [isDesktop, setIsDesktop] = useState(
-    typeof window !== 'undefined' ? window.innerWidth >= 768 : true
+// ── Pure-CSS background — zero WebGL, zero JS, GPU-composited only ───────────
+function HeroBg() {
+  return (
+    <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+      {/* Base */}
+      <div className="absolute inset-0 bg-[#08080e]" />
+
+      {/* Cube grid lines */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: [
+            'linear-gradient(rgba(160,160,220,0.055) 1px, transparent 1px)',
+            'linear-gradient(90deg, rgba(160,160,220,0.055) 1px, transparent 1px)',
+          ].join(', '),
+          backgroundSize: '58px 58px',
+        }}
+      />
+
+      {/* Inner cube highlight — top-left of each cell (3D illusion) */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: [
+            'linear-gradient(rgba(220,220,255,0.025) 2px, transparent 2px)',
+            'linear-gradient(90deg, rgba(220,220,255,0.025) 2px, transparent 2px)',
+          ].join(', '),
+          backgroundSize: '58px 58px',
+          backgroundPosition: '3px 3px',
+        }}
+      />
+
+      {/* Right-side volumetric glow — simulates the Spline lighting */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(ellipse 72% 110% at 88% 45%, rgba(55,55,100,0.55) 0%, rgba(25,20,55,0.30) 40%, transparent 68%)',
+        }}
+      />
+
+      {/* Top-right corner highlight */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(ellipse 40% 35% at 95% 5%, rgba(120,100,200,0.12) 0%, transparent 60%)',
+        }}
+      />
+
+      {/* Left dark fade — keeps text readable */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            'linear-gradient(to right, rgba(8,8,14,0.98) 0%, rgba(8,8,14,0.82) 28%, rgba(8,8,14,0.35) 52%, transparent 75%)',
+        }}
+      />
+
+      {/* Bottom fade */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            'linear-gradient(to top, rgba(8,8,14,0.75) 0%, transparent 40%)',
+        }}
+      />
+    </div>
   )
-  useEffect(() => {
-    const check = () => setIsDesktop(window.innerWidth >= 768)
-    window.addEventListener('resize', check, { passive: true })
-    return () => window.removeEventListener('resize', check)
-  }, [])
-  return isDesktop
 }
 
 export default function HeroSection() {
-  const isDesktop = useIsDesktop()
-
   return (
     <section
-      className="relative min-h-[100svh] flex flex-col bg-[#080808] overflow-hidden"
+      className="relative min-h-[100svh] flex flex-col bg-[#08080e] overflow-hidden"
       dir="ltr"
     >
-      {/* ── Spline — desktop only ──────────────────────────────────────────── */}
-      {isDesktop && (
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <Suspense fallback={<div className="absolute inset-0 bg-[#080808]" />}>
-            <Spline scene={SPLINE_SCENE} className="w-full h-full" />
-          </Suspense>
-        </div>
-      )}
+      <HeroBg />
 
-      {/* ── Mobile background glow ────────────────────────────────────────── */}
-      {!isDesktop && (
-        <div
-          className="absolute inset-0 z-0 pointer-events-none"
-          style={{
-            background: [
-              'radial-gradient(ellipse 90% 55% at 50% 105%, rgba(182,0,168,0.20) 0%, transparent 65%)',
-              'radial-gradient(ellipse 55% 35% at 85% 15%, rgba(118,33,176,0.14) 0%, transparent 55%)',
-            ].join(', '),
-          }}
-        />
-      )}
-
-      {/* ── Desktop gradient — dark LEFT (text), transparent RIGHT (arm) ──── */}
-      {isDesktop && (
-        <div
-          className="absolute inset-0 z-[1] pointer-events-none"
-          style={{
-            background: [
-              'linear-gradient(to right, rgba(8,8,8,0.98) 0%, rgba(8,8,8,0.90) 28%, rgba(8,8,8,0.50) 52%, transparent 78%)',
-              'linear-gradient(to top, rgba(8,8,8,0.75) 0%, rgba(8,8,8,0.15) 22%, transparent 45%)',
-            ].join(', '),
-          }}
-        />
-      )}
-
-      {/* ── Navbar ────────────────────────────────────────────────────────── */}
+      {/* ── Navbar ──────────────────────────────────────────────────────────── */}
       <nav
         dir="ltr"
-        className="absolute top-0 left-0 right-0 z-50 flex justify-between items-center px-5 sm:px-8 md:px-14 py-5"
+        className="relative z-20 flex justify-between items-center px-5 sm:px-8 md:px-14 py-5 shrink-0"
       >
-        {/* Logo */}
         <motion.div
           className="flex items-baseline gap-[3px] select-none"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <span
-            className="text-white font-black text-xl tracking-tight"
-            style={HEEBO}
-          >
-            Nova
-          </span>
-          <span
-            className="text-white/55 font-light text-xl tracking-tight"
-            style={HEEBO}
-          >
-            Digital
-          </span>
+          <span className="text-white font-black text-xl tracking-tight" style={HEEBO}>Nova</span>
+          <span className="text-white/50 font-light text-xl tracking-tight" style={HEEBO}>Digital</span>
         </motion.div>
 
-        {/* Nav links */}
         <motion.ul
           className="hidden md:flex gap-7 lg:gap-10"
           dir="rtl"
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.18 }}
+          transition={{ duration: 0.5, delay: 0.18 }}
         >
           {navLinks.map(({ label, href }) => (
             <li key={label}>
               <a
                 href={href}
-                className="text-white/50 hover:text-white transition-colors duration-200 text-sm uppercase tracking-widest"
+                className="text-white/45 hover:text-white transition-colors duration-200 text-xs sm:text-sm uppercase tracking-widest"
                 style={HEEBO}
               >
                 {label}
@@ -131,10 +139,9 @@ export default function HeroSection() {
           ))}
         </motion.ul>
 
-        {/* CTA */}
         <motion.a
           href="#contact"
-          className="hidden md:inline-flex rounded-full text-white font-medium text-xs uppercase tracking-widest px-7 py-2.5 cursor-pointer hover:opacity-80 transition-opacity"
+          className="hidden md:inline-flex rounded-full text-white font-medium text-xs uppercase tracking-widest px-6 py-2.5 cursor-pointer hover:opacity-80 transition-opacity"
           style={PURPLE_BTN}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -144,40 +151,39 @@ export default function HeroSection() {
         </motion.a>
       </nav>
 
-      {/* ── Spacer — pushes content to the bottom ─────────────────────────── */}
-      <div className="flex-1" />
+      {/* ── Spacer — pushes content to bottom ───────────────────────────────── */}
+      <div className="flex-1 min-h-[2rem]" />
 
-      {/* ── Hero content ──────────────────────────────────────────────────── */}
+      {/* ── Hero content ────────────────────────────────────────────────────── */}
       <div
         dir="rtl"
         className={[
           'relative z-10 pointer-events-none w-full',
-          // desktop: left half only so arm is free on the right
-          'md:max-w-[50%] lg:max-w-[46%] md:pl-14 md:pr-6 md:pb-20',
-          // mobile: full width, snug bottom padding
-          'px-5 pb-10 sm:px-8 sm:pb-14',
+          'md:max-w-[52%] lg:max-w-[48%] xl:max-w-[44%]',
+          'md:pl-14 md:pr-6 md:pb-16 lg:pb-20',
+          'px-5 pb-10 sm:px-8 sm:pb-12',
         ].join(' ')}
       >
         {/* Eyebrow */}
         <motion.p
-          className="text-white/30 text-[10px] uppercase tracking-[0.35em] mb-4"
+          className="text-white/28 text-[9px] sm:text-[10px] uppercase tracking-[0.35em] mb-3 sm:mb-4"
           style={HEEBO}
           {...up(0.28)}
         >
           סטודיו לעיצוב ופיתוח דיגיטלי
         </motion.p>
 
-        {/* Main heading */}
+        {/* Main heading — tighter clamp for desktop readability */}
         <motion.h1
           style={{
             ...HEEBO,
             fontWeight: 900,
-            fontSize: 'clamp(2.6rem, 6.2vw, 6rem)',
-            lineHeight: 0.93,
+            fontSize: 'clamp(2.2rem, 4.8vw, 4.8rem)',
+            lineHeight: 0.95,
             letterSpacing: '-0.03em',
           }}
-          className="text-white mb-4 md:mb-5"
-          {...up(0.38)}
+          className="text-white mb-3 sm:mb-4 md:mb-5"
+          {...up(0.36)}
         >
           בונים אתרים<br />
           <span
@@ -194,18 +200,18 @@ export default function HeroSection() {
 
         {/* Subheading */}
         <motion.p
-          className="text-white/70 mb-3 md:mb-4"
-          style={{ ...HEEBO, fontWeight: 300, fontSize: 'clamp(0.95rem, 1.7vw, 1.3rem)' }}
-          {...up(0.50)}
+          className="text-white/68 mb-2 sm:mb-3 md:mb-4"
+          style={{ ...HEEBO, fontWeight: 300, fontSize: 'clamp(0.88rem, 1.5vw, 1.2rem)' }}
+          {...up(0.48)}
         >
           מעיצוב פיקסל-פרפקט ועד סוכני AI — פתרון דיגיטלי מלא.
         </motion.p>
 
-        {/* Description */}
+        {/* Description — hidden on small mobile, visible sm+ */}
         <motion.p
-          className="text-white/40 mb-6 md:mb-9 max-w-[440px] leading-relaxed"
-          style={{ ...HEEBO, fontWeight: 300, fontSize: 'clamp(0.80rem, 1.2vw, 0.95rem)' }}
-          {...up(0.62)}
+          className="hidden sm:block text-white/38 mb-5 md:mb-8 max-w-[420px] leading-relaxed"
+          style={{ ...HEEBO, fontWeight: 300, fontSize: 'clamp(0.78rem, 1.1vw, 0.9rem)' }}
+          {...up(0.58)}
         >
           אנחנו בונים אתרים שממירים, מטמיעים סוכני AI שחוסכים שעות עבודה,
           ומעצבים חוויות דיגיטליות שגורמות ללקוחות לחזור. מהרעיון ועד
@@ -214,19 +220,19 @@ export default function HeroSection() {
 
         {/* CTAs */}
         <motion.div
-          className="flex flex-wrap gap-3 pointer-events-auto"
-          {...up(0.74)}
+          className="flex flex-wrap gap-2.5 sm:gap-3 pointer-events-auto mb-4 sm:mb-5 md:mb-6"
+          {...up(0.68)}
         >
           <a
             href="#contact"
-            className="rounded-full text-white font-semibold text-sm px-7 py-3 sm:px-8 sm:py-3.5 cursor-pointer hover:opacity-85 active:scale-[0.97] transition-all"
+            className="rounded-full text-white font-semibold text-xs sm:text-sm px-6 py-2.5 sm:px-7 sm:py-3 md:px-8 md:py-3.5 cursor-pointer hover:opacity-85 active:scale-[0.97] transition-all"
             style={PURPLE_BTN}
           >
             בואו נדבר
           </a>
           <a
             href="#projects"
-            className="rounded-full border border-white/20 text-white/70 hover:text-white hover:border-white/50 font-medium text-sm px-7 py-3 sm:px-8 sm:py-3.5 cursor-pointer transition-colors duration-200"
+            className="rounded-full border border-white/20 text-white/65 hover:text-white hover:border-white/45 font-medium text-xs sm:text-sm px-6 py-2.5 sm:px-7 sm:py-3 md:px-8 md:py-3.5 cursor-pointer transition-colors duration-200"
             style={HEEBO}
           >
             ראה עבודות
@@ -235,30 +241,28 @@ export default function HeroSection() {
 
         {/* Trust */}
         <motion.p
-          className="text-white/22 text-[11px] mt-4 md:mt-6"
+          className="text-white/20 text-[10px] sm:text-[11px]"
           style={HEEBO}
-          {...up(0.88)}
+          {...up(0.80)}
         >
           מעל 50 פרויקטים • לקוחות מרוצים • תוצאות מדידות
         </motion.p>
       </div>
 
-      {/* ── Scroll hint — visible on mobile, hidden on desktop ────────────── */}
+      {/* ── Mobile scroll hint ───────────────────────────────────────────────── */}
       <motion.div
         className="md:hidden absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1 pointer-events-none"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.4, duration: 0.6 }}
       >
-        <span className="text-white/25 text-[9px] uppercase tracking-[0.3em]" style={HEEBO}>
-          גלול למטה
-        </span>
+        <span className="text-white/22 text-[9px] uppercase tracking-[0.3em]" style={HEEBO}>גלול</span>
         <motion.div
           animate={{ y: [0, 5, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
+          transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }}
         >
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M3 6l5 5 5-5" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <path d="M3 6l5 5 5-5" stroke="rgba(255,255,255,0.22)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </motion.div>
       </motion.div>
