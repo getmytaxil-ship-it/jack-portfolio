@@ -2,17 +2,20 @@ import { useEffect, useRef, useState } from 'react'
 import UrbanJungleTile from './UrbanJungleTile'
 
 const EARTH_INDEX = 5
-// Video tiles — index in row1Images that is replaced by a local video
-const VIDEO_INDEX_ROW1 = 0
-const VIDEO_SRC_ROW1 = `${import.meta.env.BASE_URL}videos/tile_01.mp4`
+
+// Video overrides — index in row1Images → local video path
+const VIDEO_MAP_ROW1: Record<number, string> = {
+  0: `${import.meta.env.BASE_URL}videos/tile_01.mp4`, // screen recording
+  5: `${import.meta.env.BASE_URL}videos/tile_02.mp4`, // replaces UrbanJungle
+}
 
 const row1Images = [
-  null, // ← video tile (tile_01.mp4)
+  null, // 0 — video tile_01
   'https://motionsites.ai/assets/hero-codenest-preview-Cgppc2qV.gif',
   'https://motionsites.ai/assets/hero-vex-ventures-preview-BczMFIiw.gif',
   'https://motionsites.ai/assets/hero-stellar-ai-v2-preview-DjvxjG3C.gif',
   'https://motionsites.ai/assets/hero-asme-preview-B_nGDnTP.gif',
-  null, // ← Urban Jungle tile
+  null, // 5 — video tile_02 (was Urban Jungle)
   'https://motionsites.ai/assets/hero-vitara-preview-Cjz2QYyU.gif',
   'https://motionsites.ai/assets/hero-terra-preview-BFjrCr7T.gif',
   'https://motionsites.ai/assets/hero-skyelite-preview-DHaZIgUv.gif',
@@ -55,7 +58,6 @@ function useTileSize() {
 function Tile({
   src,
   isUrban,
-  isVideo,
   videoSrc,
   w,
   h,
@@ -63,21 +65,13 @@ function Tile({
 }: {
   src: string | null
   isUrban: boolean
-  isVideo?: boolean
   videoSrc?: string
   w: number
   h: number
   rounded: string
 }) {
-  if (isUrban) {
-    return (
-      <div className={`flex-shrink-0 ${rounded} overflow-hidden`} style={{ width: w, height: h }}>
-        <UrbanJungleTile width={w} height={h} />
-      </div>
-    )
-  }
-
-  if (isVideo && videoSrc) {
+  // video overrides everything else
+  if (videoSrc) {
     return (
       <video
         src={videoSrc}
@@ -88,6 +82,14 @@ function Tile({
         className={`flex-shrink-0 object-cover ${rounded}`}
         style={{ width: w, height: h }}
       />
+    )
+  }
+
+  if (isUrban) {
+    return (
+      <div className={`flex-shrink-0 ${rounded} overflow-hidden`} style={{ width: w, height: h }}>
+        <UrbanJungleTile width={w} height={h} />
+      </div>
     )
   }
 
@@ -140,9 +142,8 @@ export default function MarqueeSection() {
               <Tile
                 key={i}
                 src={src}
-                isUrban={i === EARTH_INDEX}
-                isVideo={i === VIDEO_INDEX_ROW1}
-                videoSrc={VIDEO_SRC_ROW1}
+                isUrban={i === EARTH_INDEX && !VIDEO_MAP_ROW1[i]}
+                videoSrc={VIDEO_MAP_ROW1[i]}
                 w={w}
                 h={h}
                 rounded={rounded}
@@ -180,18 +181,20 @@ export default function MarqueeSection() {
         className="flex mb-2 sm:mb-3"
         style={{ gap, transform: `translateX(${offset - 200}px)`, willChange: 'transform' }}
       >
-        {row1Desktop.map((src, i) => (
-          <Tile
-            key={i}
-            src={src}
-            isUrban={i % row1Images.length === EARTH_INDEX}
-            isVideo={i % row1Images.length === VIDEO_INDEX_ROW1}
-            videoSrc={VIDEO_SRC_ROW1}
-            w={w}
-            h={h}
-            rounded={rounded}
-          />
-        ))}
+        {row1Desktop.map((src, i) => {
+          const idx = i % row1Images.length
+          return (
+            <Tile
+              key={i}
+              src={src}
+              isUrban={idx === EARTH_INDEX && !VIDEO_MAP_ROW1[idx]}
+              videoSrc={VIDEO_MAP_ROW1[idx]}
+              w={w}
+              h={h}
+              rounded={rounded}
+            />
+          )
+        })}
       </div>
 
       <div
