@@ -2,9 +2,12 @@ import { useEffect, useRef, useState } from 'react'
 import UrbanJungleTile from './UrbanJungleTile'
 
 const EARTH_INDEX = 5
+// Video tiles — index in row1Images that is replaced by a local video
+const VIDEO_INDEX_ROW1 = 0
+const VIDEO_SRC_ROW1 = `${import.meta.env.BASE_URL}videos/tile_01.mp4`
 
 const row1Images = [
-  'https://motionsites.ai/assets/hero-space-voyage-preview-eECLH3Yc.gif',
+  null, // ← video tile (tile_01.mp4)
   'https://motionsites.ai/assets/hero-codenest-preview-Cgppc2qV.gif',
   'https://motionsites.ai/assets/hero-vex-ventures-preview-BczMFIiw.gif',
   'https://motionsites.ai/assets/hero-stellar-ai-v2-preview-DjvxjG3C.gif',
@@ -30,7 +33,6 @@ const row2Images = [
   'https://motionsites.ai/assets/hero-celestia-preview-0yO3jXO8.gif',
 ]
 
-// לדסקטופ — משולשים ללולאה חלקה
 const row1Desktop = [...row1Images, ...row1Images, ...row1Images]
 const row2Desktop = [...row2Images, ...row2Images, ...row2Images]
 
@@ -49,27 +51,46 @@ function useTileSize() {
   return size
 }
 
-// ── Tile יחיד ────────────────────────────────────────────────────────────────
+// ── Tile ─────────────────────────────────────────────────────────────────────
 function Tile({
   src,
   isUrban,
+  isVideo,
+  videoSrc,
   w,
   h,
   rounded,
 }: {
   src: string | null
   isUrban: boolean
+  isVideo?: boolean
+  videoSrc?: string
   w: number
   h: number
   rounded: string
 }) {
   if (isUrban) {
     return (
-      <div className={`flex-shrink-0 ${rounded}`} style={{ width: w, height: h }}>
+      <div className={`flex-shrink-0 ${rounded} overflow-hidden`} style={{ width: w, height: h }}>
         <UrbanJungleTile width={w} height={h} />
       </div>
     )
   }
+
+  if (isVideo && videoSrc) {
+    return (
+      <video
+        src={videoSrc}
+        muted
+        autoPlay
+        loop
+        playsInline
+        className={`flex-shrink-0 object-cover ${rounded}`}
+        style={{ width: w, height: h }}
+      />
+    )
+  }
+
   return (
     <img
       src={src!}
@@ -90,7 +111,6 @@ export default function MarqueeSection() {
   const gap = isMobile ? 8 : 12
   const rounded = isMobile ? 'rounded-xl' : 'rounded-2xl'
 
-  // גלילה-מניעה — רק בדסקטופ
   useEffect(() => {
     if (isMobile) return
     const handleScroll = () => {
@@ -106,30 +126,23 @@ export default function MarqueeSection() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [isMobile])
 
-  // ── מובייל: גרירה חופשית עם האצבע ────────────────────────────────────────
+  // ── Mobile ────────────────────────────────────────────────────────────────
   if (isMobile) {
     return (
-      <section
-        ref={sectionRef}
-        className="bg-[#0C0C0C] pt-16 pb-6"
-        dir="ltr"
-      >
-        {/* הוראה קצרה */}
+      <section ref={sectionRef} className="bg-[#0C0C0C] pt-16 pb-6" dir="ltr">
         <p className="text-white/25 text-[10px] text-center mb-3 tracking-widest uppercase">
           החלק לצפייה
         </p>
 
-        {/* שורה 1 — גרירה שמאלה/ימינה */}
-        <div
-          className="overflow-x-auto scrollbar-hide mb-2"
-          style={{ paddingInline: 16, cursor: 'grab' }}
-        >
+        <div className="overflow-x-auto scrollbar-hide mb-2" style={{ paddingInline: 16, cursor: 'grab' }}>
           <div className="flex" style={{ gap, width: 'max-content' }}>
             {row1Images.map((src, i) => (
               <Tile
                 key={i}
                 src={src}
                 isUrban={i === EARTH_INDEX}
+                isVideo={i === VIDEO_INDEX_ROW1}
+                videoSrc={VIDEO_SRC_ROW1}
                 w={w}
                 h={h}
                 rounded={rounded}
@@ -138,11 +151,7 @@ export default function MarqueeSection() {
           </div>
         </div>
 
-        {/* שורה 2 — גרירה שמאלה/ימינה */}
-        <div
-          className="overflow-x-auto scrollbar-hide"
-          style={{ paddingInline: 16, cursor: 'grab' }}
-        >
+        <div className="overflow-x-auto scrollbar-hide" style={{ paddingInline: 16, cursor: 'grab' }}>
           <div className="flex" style={{ gap, width: 'max-content' }}>
             {row2Images.map((src, i) => (
               <Tile
@@ -160,27 +169,24 @@ export default function MarqueeSection() {
     )
   }
 
-  // ── דסקטופ/טאבלט: פרלקס עם גלילה ────────────────────────────────────────
+  // ── Desktop ───────────────────────────────────────────────────────────────
   return (
     <section
       ref={sectionRef}
       className="bg-[#0C0C0C] pt-24 sm:pt-32 md:pt-40 pb-6 sm:pb-10 overflow-hidden"
       dir="ltr"
     >
-      {/* שורה 1 — נעה ימינה */}
       <div
         className="flex mb-2 sm:mb-3"
-        style={{
-          gap,
-          transform: `translateX(${offset - 200}px)`,
-          willChange: 'transform',
-        }}
+        style={{ gap, transform: `translateX(${offset - 200}px)`, willChange: 'transform' }}
       >
         {row1Desktop.map((src, i) => (
           <Tile
             key={i}
             src={src}
             isUrban={i % row1Images.length === EARTH_INDEX}
+            isVideo={i % row1Images.length === VIDEO_INDEX_ROW1}
+            videoSrc={VIDEO_SRC_ROW1}
             w={w}
             h={h}
             rounded={rounded}
@@ -188,14 +194,9 @@ export default function MarqueeSection() {
         ))}
       </div>
 
-      {/* שורה 2 — נעה שמאלה */}
       <div
         className="flex"
-        style={{
-          gap,
-          transform: `translateX(${-(offset - 200)}px)`,
-          willChange: 'transform',
-        }}
+        style={{ gap, transform: `translateX(${-(offset - 200)}px)`, willChange: 'transform' }}
       >
         {row2Desktop.map((src, i) => (
           <Tile
