@@ -54,7 +54,7 @@ export default function AboutSection() {
     >
       {/* ── Spline — ימין בדסקטופ, מלא ברקע במובייל ────────────────────── */}
       {splineReady && (
-        <div className="absolute inset-0 z-0 pointer-events-auto md:translate-x-[28%]">
+        <div className="absolute inset-0 z-0 pointer-events-none md:pointer-events-auto md:translate-x-[28%]">
           <Suspense fallback={null}>
             <Spline scene={SPLINE_URL} />
           </Suspense>
@@ -81,6 +81,7 @@ export default function AboutSection() {
 
           {/* תווית */}
           <motion.p
+            dir="rtl"
             className="text-[10px] uppercase tracking-[0.3em] text-white/40"
             style={MONO}
             {...fadeUp(0)}
@@ -90,7 +91,7 @@ export default function AboutSection() {
 
           {/* כותרת */}
           <motion.h2
-            dir="rtl"
+            dir="ltr"
             style={{
               ...HEEBO,
               fontWeight: 900,

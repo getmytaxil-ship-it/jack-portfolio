@@ -57,30 +57,30 @@ function HeroBg() {
         }}
       />
 
-      {/* Right-side volumetric glow — simulates the Spline lighting */}
+      {/* Left-side volumetric glow — cube grid visible on the left */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse 72% 110% at 88% 45%, rgba(55,55,100,0.55) 0%, rgba(25,20,55,0.30) 40%, transparent 68%)',
+            'radial-gradient(ellipse 72% 110% at 12% 45%, rgba(55,55,100,0.55) 0%, rgba(25,20,55,0.30) 40%, transparent 68%)',
         }}
       />
 
-      {/* Top-right corner highlight */}
+      {/* Top-left corner highlight */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse 40% 35% at 95% 5%, rgba(120,100,200,0.12) 0%, transparent 60%)',
+            'radial-gradient(ellipse 40% 35% at 5% 5%, rgba(120,100,200,0.12) 0%, transparent 60%)',
         }}
       />
 
-      {/* Left dark fade — keeps text readable */}
+      {/* Right dark fade — keeps Hebrew text readable */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            'linear-gradient(to right, rgba(8,8,14,0.98) 0%, rgba(8,8,14,0.82) 28%, rgba(8,8,14,0.35) 52%, transparent 75%)',
+            'linear-gradient(to left, rgba(8,8,14,0.98) 0%, rgba(8,8,14,0.82) 28%, rgba(8,8,14,0.35) 52%, transparent 75%)',
         }}
       />
 
@@ -154,13 +154,13 @@ export default function HeroSection() {
       {/* ── Spacer — pushes content to bottom ───────────────────────────────── */}
       <div className="flex-1 min-h-[2rem]" />
 
-      {/* ── Hero content ────────────────────────────────────────────────────── */}
+      {/* ── Hero content — ml-auto pushes it to the RIGHT (Hebrew RTL side) ── */}
       <div
         dir="rtl"
         className={[
-          'relative z-10 pointer-events-none w-full',
-          'md:max-w-[52%] lg:max-w-[48%] xl:max-w-[44%]',
-          'md:pl-14 md:pr-6 md:pb-16 lg:pb-20',
+          'relative z-10 pointer-events-none w-full ml-auto',
+          'md:max-w-[50%] lg:max-w-[46%] xl:max-w-[42%]',
+          'md:pr-14 md:pl-6 md:pb-16 lg:pb-20',
           'px-5 pb-10 sm:px-8 sm:pb-12',
         ].join(' ')}
       >
