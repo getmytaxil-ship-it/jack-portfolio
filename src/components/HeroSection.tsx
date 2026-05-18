@@ -20,153 +20,116 @@ const navLinks = [
 ]
 
 const up = (delay: number) => ({
-  initial:    { opacity: 0, y: 16 },
+  initial:    { opacity: 0, y: 20 },
   animate:    { opacity: 1, y: 0  },
-  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const, delay },
+  transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const, delay },
 })
-
-// ── Pure-CSS background — zero WebGL, zero JS, GPU-composited only ───────────
-function HeroBg() {
-  return (
-    <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-      {/* Base */}
-      <div className="absolute inset-0 bg-[#08080e]" />
-
-      {/* Cube grid lines */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: [
-            'linear-gradient(rgba(160,160,220,0.055) 1px, transparent 1px)',
-            'linear-gradient(90deg, rgba(160,160,220,0.055) 1px, transparent 1px)',
-          ].join(', '),
-          backgroundSize: '58px 58px',
-        }}
-      />
-
-      {/* Inner cube highlight — top-left of each cell (3D illusion) */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: [
-            'linear-gradient(rgba(220,220,255,0.025) 2px, transparent 2px)',
-            'linear-gradient(90deg, rgba(220,220,255,0.025) 2px, transparent 2px)',
-          ].join(', '),
-          backgroundSize: '58px 58px',
-          backgroundPosition: '3px 3px',
-        }}
-      />
-
-      {/* Left-side volumetric glow — cube grid visible on the left */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            'radial-gradient(ellipse 72% 110% at 12% 45%, rgba(55,55,100,0.55) 0%, rgba(25,20,55,0.30) 40%, transparent 68%)',
-        }}
-      />
-
-      {/* Top-left corner highlight */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            'radial-gradient(ellipse 40% 35% at 5% 5%, rgba(120,100,200,0.12) 0%, transparent 60%)',
-        }}
-      />
-
-      {/* Right dark fade — keeps Hebrew text readable */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            'linear-gradient(to left, rgba(8,8,14,0.98) 0%, rgba(8,8,14,0.82) 28%, rgba(8,8,14,0.35) 52%, transparent 75%)',
-        }}
-      />
-
-      {/* Bottom fade */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            'linear-gradient(to top, rgba(8,8,14,0.75) 0%, transparent 40%)',
-        }}
-      />
-    </div>
-  )
-}
 
 export default function HeroSection() {
   return (
     <section
-      className="relative min-h-[100svh] flex flex-col justify-center md:justify-end bg-[#08080e] overflow-hidden"
+      className="relative min-h-[100svh] flex items-center justify-center bg-[#07070d] overflow-hidden"
       dir="ltr"
     >
-      <HeroBg />
+      {/* ── Video background (serein-inspired) ─────────────────────────────── */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <video
+          src={`${import.meta.env.BASE_URL}videos/0518.mp4`}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-full object-cover"
+          style={{ opacity: 0.16 }}
+        />
+        {/* Gradient vignette over video */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'radial-gradient(ellipse 80% 70% at 50% 50%, transparent 0%, rgba(7,7,13,0.72) 60%, rgba(7,7,13,0.97) 100%)',
+          }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(to bottom, rgba(7,7,13,0.5) 0%, transparent 25%, transparent 72%, rgba(7,7,13,0.9) 100%)',
+          }}
+        />
+      </div>
 
-      {/* ── Navbar — absolute so it doesn't affect vertical content flow ───── */}
-      <nav
-        dir="ltr"
-        className="absolute top-0 left-0 right-0 z-50 flex justify-between items-center px-5 sm:px-8 md:px-14 py-5"
-      >
-        <motion.div
-          className="flex items-baseline gap-[3px] select-none"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          <span className="text-white font-black text-xl tracking-tight" style={HEEBO}>Nova</span>
-          <span className="text-white/50 font-light text-xl tracking-tight" style={HEEBO}>Digital</span>
-        </motion.div>
+      {/* ── Cube grid overlay ───────────────────────────────────────────────── */}
+      <div
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{
+          backgroundImage: [
+            'linear-gradient(rgba(160,160,220,0.045) 1px, transparent 1px)',
+            'linear-gradient(90deg, rgba(160,160,220,0.045) 1px, transparent 1px)',
+          ].join(', '),
+          backgroundSize: '58px 58px',
+        }}
+      />
 
-        <motion.ul
-          className="hidden md:flex gap-7 lg:gap-10"
-          dir="rtl"
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.18 }}
-        >
-          {navLinks.map(({ label, href }) => (
-            <li key={label}>
-              <a
-                href={href}
-                className="text-white/45 hover:text-white transition-colors duration-200 text-xs sm:text-sm uppercase tracking-widest"
-                style={HEEBO}
-              >
-                {label}
-              </a>
-            </li>
-          ))}
-        </motion.ul>
+      {/* ── Glassmorphism floating navbar (serein-inspired) ─────────────────── */}
+      <nav className="absolute top-3 left-3 right-3 sm:top-5 sm:left-5 sm:right-5 z-50" dir="ltr">
+        <div className="max-w-5xl mx-auto bg-white/[0.04] backdrop-blur-2xl border border-white/[0.07] rounded-full shadow-xl">
+          <div className="flex items-center justify-between h-12 sm:h-14 px-5 sm:px-7">
+            {/* Logo */}
+            <motion.div
+              className="flex items-baseline gap-[3px] select-none"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <span className="text-white font-black text-lg tracking-tight" style={HEEBO}>Nova</span>
+              <span className="text-white/40 font-light text-lg tracking-tight" style={HEEBO}>Digital</span>
+            </motion.div>
 
-        <motion.a
-          href="#contact"
-          className="hidden md:inline-flex rounded-full text-white font-medium text-xs uppercase tracking-widest px-6 py-2.5 cursor-pointer hover:opacity-80 transition-opacity"
-          style={PURPLE_BTN}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.24 }}
-        >
-          צור קשר
-        </motion.a>
+            {/* Nav links */}
+            <motion.ul
+              className="hidden md:flex gap-7"
+              dir="rtl"
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.18 }}
+            >
+              {navLinks.map(({ label, href }) => (
+                <li key={label}>
+                  <a
+                    href={href}
+                    className="text-white/38 hover:text-white/80 transition-colors duration-200 text-xs uppercase tracking-widest"
+                    style={HEEBO}
+                  >
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </motion.ul>
+
+            {/* CTA */}
+            <motion.a
+              href="#contact"
+              className="hidden md:inline-flex rounded-full text-white font-medium text-xs uppercase tracking-widest px-5 py-2 cursor-pointer hover:opacity-80 transition-opacity"
+              style={PURPLE_BTN}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.24 }}
+            >
+              צור קשר
+            </motion.a>
+          </div>
+        </div>
       </nav>
 
-      {/* ── Hero content ─────────────────────────────────────────────────────
-           Mobile: justify-center centres it vertically + pt-24 clears the nav
-           Desktop: justify-end keeps it at bottom, ml-auto pushes it RIGHT     */}
+      {/* ── Hero content — centered (serein-inspired layout) ─────────────────── */}
       <div
         dir="rtl"
-        className={[
-          'relative z-10 pointer-events-none w-full',
-          'md:ml-auto md:max-w-[50%] lg:max-w-[46%] xl:max-w-[42%]',
-          'md:pr-14 md:pl-6 md:pb-16 lg:pb-20',
-          'px-6 pt-20 pb-10 sm:px-10 sm:pt-24 sm:pb-12 md:pt-0',
-          'flex flex-col items-center md:items-start text-center md:text-right',
-        ].join(' ')}
+        className="relative z-10 text-center px-6 max-w-2xl mx-auto pt-16 sm:pt-14 pointer-events-none"
       >
         {/* Eyebrow */}
         <motion.p
-          className="text-white/28 text-[9px] sm:text-[10px] uppercase tracking-[0.35em] mb-4 sm:mb-5"
+          className="text-white/22 text-[9px] sm:text-[10px] uppercase tracking-[0.45em] mb-5 sm:mb-6"
           style={HEEBO}
           {...up(0.28)}
         >
@@ -178,11 +141,11 @@ export default function HeroSection() {
           style={{
             ...HEEBO,
             fontWeight: 900,
-            fontSize: 'clamp(2.05rem, 8.5vw, 4.8rem)',
-            lineHeight: 1.06,
+            fontSize: 'clamp(2.4rem, 9.5vw, 5.6rem)',
+            lineHeight: 1.04,
             letterSpacing: '-0.03em',
           }}
-          className="text-white mb-4 sm:mb-5 md:mb-5 w-full"
+          className="text-white mb-5 sm:mb-6"
           {...up(0.36)}
         >
           בונים אתרים<br />
@@ -198,30 +161,19 @@ export default function HeroSection() {
           </span>
         </motion.h1>
 
-        {/* Subheading */}
+        {/* Sub */}
         <motion.p
-          className="text-white/68 mb-3 sm:mb-4 md:mb-4 max-w-[340px] md:max-w-none leading-snug"
-          style={{ ...HEEBO, fontWeight: 300, fontSize: 'clamp(0.92rem, 3.8vw, 1.2rem)' }}
-          {...up(0.48)}
+          className="text-white/50 mb-8 sm:mb-10 max-w-xs sm:max-w-sm mx-auto leading-relaxed"
+          style={{ ...HEEBO, fontWeight: 300, fontSize: 'clamp(0.9rem, 3.8vw, 1.1rem)' }}
+          {...up(0.46)}
         >
           מעיצוב פיקסל-פרפקט ועד סוכני AI — פתרון דיגיטלי מלא.
         </motion.p>
 
-        {/* Description — hidden on mobile */}
-        <motion.p
-          className="hidden md:block text-white/38 mb-8 max-w-[420px] leading-relaxed"
-          style={{ ...HEEBO, fontWeight: 300, fontSize: 'clamp(0.78rem, 1.1vw, 0.9rem)' }}
-          {...up(0.58)}
-        >
-          אנחנו בונים אתרים שממירים, מטמיעים סוכני AI שחוסכים שעות עבודה,
-          ומעצבים חוויות דיגיטליות שגורמות ללקוחות לחזור. מהרעיון ועד
-          ההשקה — הכל תחת קורת גג אחת.
-        </motion.p>
-
         {/* CTAs */}
         <motion.div
-          className="flex flex-wrap gap-3 pointer-events-auto mb-5 sm:mb-6 justify-center md:justify-start"
-          {...up(0.68)}
+          className="flex flex-wrap gap-3 justify-center pointer-events-auto"
+          {...up(0.56)}
         >
           <a
             href="#contact"
@@ -232,7 +184,7 @@ export default function HeroSection() {
           </a>
           <a
             href="#projects"
-            className="rounded-full border border-white/20 text-white/65 hover:text-white hover:border-white/45 font-medium text-sm px-8 py-3 sm:px-9 sm:py-3.5 cursor-pointer transition-colors duration-200"
+            className="rounded-full border border-white/18 text-white/60 hover:text-white hover:border-white/40 font-medium text-sm px-8 py-3 sm:px-9 sm:py-3.5 cursor-pointer transition-colors duration-200 backdrop-blur-sm"
             style={HEEBO}
           >
             ראה עבודות
@@ -241,28 +193,28 @@ export default function HeroSection() {
 
         {/* Trust */}
         <motion.p
-          className="text-white/20 text-[10px] sm:text-[11px]"
+          className="text-white/16 text-[10px] mt-6"
           style={HEEBO}
-          {...up(0.80)}
+          {...up(0.7)}
         >
           מעל 50 פרויקטים • לקוחות מרוצים • תוצאות מדידות
         </motion.p>
       </div>
 
-      {/* ── Mobile scroll hint ───────────────────────────────────────────────── */}
+      {/* ── Scroll hint ─────────────────────────────────────────────────────── */}
       <motion.div
-        className="md:hidden absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1 pointer-events-none"
+        className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1.5 pointer-events-none"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.4, duration: 0.6 }}
+        transition={{ delay: 1.2, duration: 0.6 }}
       >
-        <span className="text-white/22 text-[9px] uppercase tracking-[0.3em]" style={HEEBO}>גלול</span>
+        <span className="text-white/18 text-[8px] uppercase tracking-[0.35em]" style={HEEBO}>גלול</span>
         <motion.div
           animate={{ y: [0, 5, 0] }}
-          transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }}
+          transition={{ repeat: Infinity, duration: 1.7, ease: 'easeInOut' }}
         >
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-            <path d="M3 6l5 5 5-5" stroke="rgba(255,255,255,0.22)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M3 6l5 5 5-5" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </motion.div>
       </motion.div>

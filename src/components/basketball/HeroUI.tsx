@@ -127,22 +127,22 @@ export const HeroUI: React.FC<HeroUIProps> = ({ product, onNext, onPrev, scrollR
           <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-white/5"></div>
         </div>
 
-        {/* Text panel — physically pinned to the RIGHT edge, regardless of RTL */}
+        {/* Text panel — mobile: bottom strip | desktop: right side */}
         <div
-          className="absolute right-6 md:right-14 inset-y-0 w-[90%] md:w-[44%] flex flex-col justify-center gap-8 py-20 pointer-events-auto"
+          className="absolute inset-x-4 bottom-6 md:bottom-auto md:right-14 md:left-auto md:inset-x-auto md:inset-y-0 md:w-[42%] flex flex-col justify-end md:justify-center gap-4 md:gap-8 pb-2 md:py-20 pointer-events-auto"
           dir="rtl"
         >
           <div className="animate-item transition-all duration-1000 opacity-0 translate-y-8 delay-100">
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center gap-2 mb-2 md:mb-3">
               <span className="w-2 h-2 rounded-full bg-brand-orange shrink-0"></span>
-              <span className="text-xs font-mono text-brand-orange tracking-widest font-hebrew uppercase">מדדי ביצועים</span>
+              <span className="text-[10px] font-mono text-brand-orange tracking-widest font-hebrew uppercase">מדדי ביצועים</span>
             </div>
-            <h2 className="font-display text-5xl md:text-7xl lg:text-8xl text-white leading-[0.9] tracking-tight font-hebrew uppercase">
+            <h2 className="font-display text-3xl md:text-7xl lg:text-8xl text-white leading-[0.9] tracking-tight font-hebrew uppercase">
               שליטה<br />אבסולוטית
             </h2>
           </div>
 
-          <div className="space-y-6">
+          <div className="hidden md:block space-y-6">
             <div className="animate-item transition-all duration-1000 opacity-0 translate-y-8 delay-200 border-r-2 border-brand-orange pr-5">
               <div className="text-4xl md:text-5xl font-bold text-white mb-1">100%</div>
               <div className="text-xs text-gray-400 uppercase tracking-widest mb-1 font-hebrew">קומפוזיט מיקרופייבר</div>
@@ -161,8 +161,8 @@ export const HeroUI: React.FC<HeroUIProps> = ({ product, onNext, onPrev, scrollR
             </div>
           </div>
 
-          {/* Stat cards */}
-          <div className="animate-item transition-all duration-1000 opacity-0 translate-y-8 delay-500 flex gap-3">
+          {/* Stat cards — desktop only */}
+          <div className="hidden md:flex animate-item transition-all duration-1000 opacity-0 translate-y-8 delay-500 gap-3">
             <div className="flex-1 p-4 border border-white/10 bg-black/50 backdrop-blur-md rounded-xl">
               <div className="text-[10px] text-gray-500 font-mono mb-2 font-hebrew uppercase">איזון משקל</div>
               <div className="w-full h-[3px] bg-gray-800 rounded-full mb-2 overflow-hidden">
@@ -182,6 +182,18 @@ export const HeroUI: React.FC<HeroUIProps> = ({ product, onNext, onPrev, scrollR
               </div>
             </div>
           </div>
+
+          {/* Mobile compact stats */}
+          <div className="flex md:hidden gap-4 animate-item transition-all duration-1000 opacity-0 translate-y-8 delay-200">
+            <div className="border-r-2 border-brand-orange pr-3">
+              <div className="text-2xl font-bold text-white">100%</div>
+              <div className="text-[9px] text-gray-500 uppercase tracking-wider font-hebrew">מיקרופייבר</div>
+            </div>
+            <div className="border-r-2 border-white/25 pr-3">
+              <div className="text-2xl font-bold text-white">0.5<span className="text-sm text-gray-500">מ"מ</span></div>
+              <div className="text-[9px] text-gray-500 uppercase tracking-wider font-hebrew">עומק חריץ</div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -197,21 +209,26 @@ export const HeroUI: React.FC<HeroUIProps> = ({ product, onNext, onPrev, scrollR
           </svg>
         </div>
 
-        {/* Text panel — physically pinned to the LEFT edge */}
+        {/* Text panel — mobile: bottom strip | desktop: left side */}
         <div
-          className="absolute left-6 md:left-14 inset-y-0 w-[90%] md:w-[44%] flex flex-col justify-center gap-8 py-20 pointer-events-auto"
+          className="absolute inset-x-4 bottom-6 md:bottom-auto md:left-14 md:right-auto md:inset-x-auto md:inset-y-0 md:w-[42%] flex flex-col justify-end md:justify-center gap-4 md:gap-8 pb-2 md:py-20 pointer-events-auto"
           dir="rtl"
         >
           <div className="animate-item transition-all duration-1000 opacity-0 translate-y-8 delay-100">
-            <div className="inline-block px-3 py-1 border border-white/20 rounded-full text-[10px] font-mono text-white/70 mb-4 tracking-widest font-hebrew uppercase">
+            <div className="hidden md:inline-block px-3 py-1 border border-white/20 rounded-full text-[10px] font-mono text-white/70 mb-4 tracking-widest font-hebrew uppercase">
               אווירודינמיקה
             </div>
-            <h2 className="font-display text-5xl md:text-7xl lg:text-8xl text-white leading-[0.9] font-hebrew">
+            <div className="flex md:hidden items-center gap-2 mb-2">
+              <span className="w-2 h-2 rounded-full bg-white/40 shrink-0"></span>
+              <span className="text-[10px] font-mono text-white/50 tracking-widest font-hebrew uppercase">אווירודינמיקה</span>
+            </div>
+            <h2 className="font-display text-3xl md:text-7xl lg:text-8xl text-white leading-[0.9] font-hebrew">
               מעוף<br />מושלם
             </h2>
           </div>
 
-          <div className="animate-item transition-all duration-1000 opacity-0 translate-y-8 delay-200 flex flex-col gap-5">
+          {/* Desktop full stats */}
+          <div className="hidden md:flex animate-item transition-all duration-1000 opacity-0 translate-y-8 delay-200 flex-col gap-5">
             <div className="flex items-center gap-5 group">
               <div className="w-14 h-14 border border-white/15 rounded-full flex items-center justify-center shrink-0 group-hover:border-brand-orange transition-colors">
                 <div className="w-2 h-2 bg-white rounded-full group-hover:bg-brand-orange transition-colors"></div>
@@ -233,10 +250,22 @@ export const HeroUI: React.FC<HeroUIProps> = ({ product, onNext, onPrev, scrollR
             </div>
           </div>
 
-          <div className="animate-item transition-all duration-1000 opacity-0 translate-y-8 delay-400 border-r-2 border-white/10 pr-5">
+          <div className="hidden md:block animate-item transition-all duration-1000 opacity-0 translate-y-8 delay-400 border-r-2 border-white/10 pr-5">
             <p className="text-gray-400 text-sm md:text-base leading-relaxed font-hebrew">
               חלוקת משקל מאוזנת וסימטרית מבטיחה נתיב טיסה אמיתי ומהירות סיבוב עקבית.
             </p>
+          </div>
+
+          {/* Mobile compact stats */}
+          <div className="flex md:hidden gap-4 animate-item transition-all duration-1000 opacity-0 translate-y-8 delay-200">
+            <div className="border-r-2 border-white/30 pr-3">
+              <div className="text-2xl font-bold font-mono text-white">0.85</div>
+              <div className="text-[9px] text-gray-500 uppercase tracking-wider font-hebrew">מקדם גרר</div>
+            </div>
+            <div className="border-r-2 border-white/15 pr-3">
+              <div className="text-2xl font-bold font-mono text-white">28.5</div>
+              <div className="text-[9px] text-gray-500 uppercase tracking-wider font-hebrew">יציבות סיבובית</div>
+            </div>
           </div>
         </div>
       </div>
