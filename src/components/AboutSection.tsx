@@ -1,10 +1,6 @@
-import { lazy, Suspense, useRef, useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Snowflake, Maximize, Zap } from 'lucide-react'
 
-const Spline = lazy(() => import('@splinetool/react-spline'))
-
-const SPLINE_URL = 'https://prod.spline.design/PIgTjpRFA03yfLyK/scene.splinecode'
 const MONO: React.CSSProperties = { fontFamily: '"JetBrains Mono", monospace' }
 const HEEBO: React.CSSProperties = { fontFamily: '"Heebo", sans-serif' }
 
@@ -30,48 +26,12 @@ const fadeUp = (delay = 0) => ({
 })
 
 export default function AboutSection() {
-  const sectionRef  = useRef<HTMLElement>(null)
-  const [splineReady, setSplineReady] = useState(false)
-
-  // טוען Spline רק כשהסקשן נכנס לתצוגה — שומר על ביצועים
-  useEffect(() => {
-    const el = sectionRef.current
-    if (!el) return
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setSplineReady(true); obs.disconnect() } },
-      { rootMargin: '200px' },
-    )
-    obs.observe(el)
-    return () => obs.disconnect()
-  }, [])
-
   return (
     <section
       id="about"
-      ref={sectionRef}
       className="relative min-h-screen bg-black text-white overflow-hidden"
-      dir="ltr"          /* LTR layout — זרוע ימינה, טקסט שמאלה */
+      dir="ltr"
     >
-      {/* ── Spline — ימין בדסקטופ, מלא ברקע במובייל ────────────────────── */}
-      {splineReady && (
-        <div className="absolute inset-0 z-0 pointer-events-none md:pointer-events-auto md:translate-x-[28%]">
-          <Suspense fallback={null}>
-            <Spline scene={SPLINE_URL} />
-          </Suspense>
-        </div>
-      )}
-
-      {/* ── גרדיאנט — שמאל כהה (טקסט קריא), ימין שקוף (זרוע נראית) ───── */}
-      <div
-        className="absolute inset-0 z-0 pointer-events-none"
-        style={{
-          background: [
-            /* מובייל: כיסוי מלא מלמעלה + מהשמאל */
-            'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, transparent 40%)',
-            'linear-gradient(to right, #000 0%, rgba(0,0,0,0.88) 45%, rgba(0,0,0,0.35) 70%, transparent 100%)',
-          ].join(', '),
-        }}
-      />
 
       {/* ── תוכן — כל הטקסט שמאלה, לא חוסם את הזרוע ──────────────────── */}
       <div className="relative z-10 pointer-events-none min-h-screen flex flex-col justify-between px-6 sm:px-8 md:px-14 py-14 sm:py-16 md:py-20">

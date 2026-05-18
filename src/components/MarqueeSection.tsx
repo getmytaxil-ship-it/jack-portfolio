@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import UrbanJungleTile from './UrbanJungleTile'
 
-const EARTH_INDEX = 5
-
 // Video overrides — index → local video path
 const VIDEO_MAP_ROW1: Record<number, string> = {
   0: `${import.meta.env.BASE_URL}videos/tile_01.mp4`,
-  5: `${import.meta.env.BASE_URL}videos/tile_02.mp4`,
+  5: `${import.meta.env.BASE_URL}videos/0518.mp4`,
 }
 const VIDEO_MAP_ROW2: Record<number, string> = {
   0: `${import.meta.env.BASE_URL}videos/tile_03.mp4`,
@@ -18,7 +16,7 @@ const row1Images = [
   'https://motionsites.ai/assets/hero-vex-ventures-preview-BczMFIiw.gif',
   'https://motionsites.ai/assets/hero-stellar-ai-v2-preview-DjvxjG3C.gif',
   'https://motionsites.ai/assets/hero-asme-preview-B_nGDnTP.gif',
-  null, // 5 — video tile_02 (was Urban Jungle)
+  null, // 5 — video 0518.mp4
   'https://motionsites.ai/assets/hero-vitara-preview-Cjz2QYyU.gif',
   'https://motionsites.ai/assets/hero-terra-preview-BFjrCr7T.gif',
   'https://motionsites.ai/assets/hero-skyelite-preview-DHaZIgUv.gif',
@@ -73,8 +71,9 @@ function Tile({
   h: number
   rounded: string
 }) {
-  // video overrides everything else
+  // video overrides everything else — height follows 16:9 to prevent cropping
   if (videoSrc) {
+    const videoH = Math.round(w * 9 / 16)
     return (
       <video
         src={videoSrc}
@@ -83,7 +82,7 @@ function Tile({
         loop
         playsInline
         className={`flex-shrink-0 object-cover ${rounded}`}
-        style={{ width: w, height: h }}
+        style={{ width: w, height: videoH }}
       />
     )
   }
@@ -145,7 +144,7 @@ export default function MarqueeSection() {
               <Tile
                 key={i}
                 src={src}
-                isUrban={i === EARTH_INDEX && !VIDEO_MAP_ROW1[i]}
+                isUrban={false}
                 videoSrc={VIDEO_MAP_ROW1[i]}
                 w={w}
                 h={h}
@@ -191,7 +190,7 @@ export default function MarqueeSection() {
             <Tile
               key={i}
               src={src}
-              isUrban={idx === EARTH_INDEX && !VIDEO_MAP_ROW1[idx]}
+              isUrban={false}
               videoSrc={VIDEO_MAP_ROW1[idx]}
               w={w}
               h={h}
