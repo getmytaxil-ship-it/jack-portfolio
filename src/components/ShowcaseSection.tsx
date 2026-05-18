@@ -95,7 +95,7 @@ export default function ShowcaseSection() {
                 className="text-white leading-none"
                 style={{
                   ...ANTON,
-                  fontSize: 'clamp(52px, 10vw, 112px)',
+                  fontSize: 'clamp(36px, 9vw, 112px)',
                   letterSpacing: '0.04em',
                   textShadow: '0 0 40px rgba(255,120,0,0.6)',
                 }}
@@ -106,7 +106,7 @@ export default function ShowcaseSection() {
                 className="leading-none"
                 style={{
                   ...ANTON,
-                  fontSize: 'clamp(52px, 10vw, 112px)',
+                  fontSize: 'clamp(36px, 9vw, 112px)',
                   letterSpacing: '0.04em',
                   WebkitTextStroke: '2px rgba(255,255,255,0.9)',
                   color: 'transparent',

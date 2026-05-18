@@ -51,7 +51,7 @@ export const HeroUI: React.FC<HeroUIProps> = ({ product, onNext, onPrev, scrollR
   }, [product]);
 
   return (
-    <div ref={scrollRef} className="absolute inset-0 z-30 w-full h-full overflow-y-auto overflow-x-hidden scroll-smooth no-scrollbar snap-y snap-mandatory">
+    <div ref={scrollRef} className="absolute inset-0 z-50 w-full h-full overflow-y-auto overflow-x-hidden scroll-smooth no-scrollbar snap-y snap-mandatory">
 
       {/* --- SECTION 1: HERO --- */}
       <div className="relative w-full h-full min-h-full flex flex-col md:block snap-start">

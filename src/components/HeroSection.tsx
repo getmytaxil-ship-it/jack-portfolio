@@ -157,31 +157,32 @@ export default function HeroSection() {
       <div
         dir="rtl"
         className={[
-          'relative z-10 pointer-events-none w-full ml-auto',
-          'md:max-w-[50%] lg:max-w-[46%] xl:max-w-[42%]',
+          'relative z-10 pointer-events-none w-full',
+          'md:ml-auto md:max-w-[50%] lg:max-w-[46%] xl:max-w-[42%]',
           'md:pr-14 md:pl-6 md:pb-16 lg:pb-20',
-          'px-5 pt-24 pb-10 sm:px-8 sm:pt-28 sm:pb-12 md:pt-0',
+          'px-6 pt-20 pb-10 sm:px-10 sm:pt-24 sm:pb-12 md:pt-0',
+          'flex flex-col items-center md:items-start text-center md:text-right',
         ].join(' ')}
       >
         {/* Eyebrow */}
         <motion.p
-          className="text-white/28 text-[9px] sm:text-[10px] uppercase tracking-[0.35em] mb-3 sm:mb-4"
+          className="text-white/28 text-[9px] sm:text-[10px] uppercase tracking-[0.35em] mb-4 sm:mb-5"
           style={HEEBO}
           {...up(0.28)}
         >
           סטודיו לעיצוב ופיתוח דיגיטלי
         </motion.p>
 
-        {/* Main heading — tighter clamp for desktop readability */}
+        {/* Main heading */}
         <motion.h1
           style={{
             ...HEEBO,
             fontWeight: 900,
-            fontSize: 'clamp(2.2rem, 4.8vw, 4.8rem)',
-            lineHeight: 0.95,
+            fontSize: 'clamp(2.05rem, 8.5vw, 4.8rem)',
+            lineHeight: 1.06,
             letterSpacing: '-0.03em',
           }}
-          className="text-white mb-3 sm:mb-4 md:mb-5"
+          className="text-white mb-4 sm:mb-5 md:mb-5 w-full"
           {...up(0.36)}
         >
           בונים אתרים<br />
@@ -199,16 +200,16 @@ export default function HeroSection() {
 
         {/* Subheading */}
         <motion.p
-          className="text-white/68 mb-2 sm:mb-3 md:mb-4"
-          style={{ ...HEEBO, fontWeight: 300, fontSize: 'clamp(0.88rem, 1.5vw, 1.2rem)' }}
+          className="text-white/68 mb-3 sm:mb-4 md:mb-4 max-w-[340px] md:max-w-none leading-snug"
+          style={{ ...HEEBO, fontWeight: 300, fontSize: 'clamp(0.92rem, 3.8vw, 1.2rem)' }}
           {...up(0.48)}
         >
           מעיצוב פיקסל-פרפקט ועד סוכני AI — פתרון דיגיטלי מלא.
         </motion.p>
 
-        {/* Description — hidden on small mobile, visible sm+ */}
+        {/* Description — hidden on mobile */}
         <motion.p
-          className="hidden sm:block text-white/38 mb-5 md:mb-8 max-w-[420px] leading-relaxed"
+          className="hidden md:block text-white/38 mb-8 max-w-[420px] leading-relaxed"
           style={{ ...HEEBO, fontWeight: 300, fontSize: 'clamp(0.78rem, 1.1vw, 0.9rem)' }}
           {...up(0.58)}
         >
@@ -219,19 +220,19 @@ export default function HeroSection() {
 
         {/* CTAs */}
         <motion.div
-          className="flex flex-wrap gap-2.5 sm:gap-3 pointer-events-auto mb-4 sm:mb-5 md:mb-6"
+          className="flex flex-wrap gap-3 pointer-events-auto mb-5 sm:mb-6 justify-center md:justify-start"
           {...up(0.68)}
         >
           <a
             href="#contact"
-            className="rounded-full text-white font-semibold text-xs sm:text-sm px-6 py-2.5 sm:px-7 sm:py-3 md:px-8 md:py-3.5 cursor-pointer hover:opacity-85 active:scale-[0.97] transition-all"
+            className="rounded-full text-white font-semibold text-sm px-8 py-3 sm:px-9 sm:py-3.5 cursor-pointer hover:opacity-85 active:scale-[0.97] transition-all"
             style={PURPLE_BTN}
           >
             בואו נדבר
           </a>
           <a
             href="#projects"
-            className="rounded-full border border-white/20 text-white/65 hover:text-white hover:border-white/45 font-medium text-xs sm:text-sm px-6 py-2.5 sm:px-7 sm:py-3 md:px-8 md:py-3.5 cursor-pointer transition-colors duration-200"
+            className="rounded-full border border-white/20 text-white/65 hover:text-white hover:border-white/45 font-medium text-sm px-8 py-3 sm:px-9 sm:py-3.5 cursor-pointer transition-colors duration-200"
             style={HEEBO}
           >
             ראה עבודות
