@@ -10,6 +10,9 @@ const VIDEO_MAP_ROW2: Record<number, string> = {
   0: `${import.meta.env.BASE_URL}videos/tile_03.mp4`,
 }
 
+// Index in row2 that shows the animated UrbanJungle tile
+const URBAN_ROW2 = 4
+
 const row1Images = [
   null, // 0 — video tile_01
   'https://motionsites.ai/assets/hero-codenest-preview-Cgppc2qV.gif',
@@ -160,7 +163,7 @@ export default function MarqueeSection() {
               <Tile
                 key={i}
                 src={src}
-                isUrban={false}
+                isUrban={i === URBAN_ROW2}
                 videoSrc={VIDEO_MAP_ROW2[i]}
                 w={w}
                 h={h}
@@ -210,7 +213,7 @@ export default function MarqueeSection() {
             <Tile
               key={i}
               src={src}
-              isUrban={false}
+              isUrban={idx === URBAN_ROW2}
               videoSrc={VIDEO_MAP_ROW2[idx]}
               w={w}
               h={h}

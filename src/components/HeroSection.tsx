@@ -31,30 +31,13 @@ export default function HeroSection() {
       className="relative min-h-[100svh] flex items-center justify-center bg-[#07070d] overflow-hidden"
       dir="ltr"
     >
-      {/* ── Video background (serein-inspired) ─────────────────────────────── */}
+      {/* ── Vignette edges ──────────────────────────────────────────────────── */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <video
-          src={`${import.meta.env.BASE_URL}videos/0518.mp4`}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="w-full h-full object-cover"
-          style={{ opacity: 0.16 }}
-        />
-        {/* Gradient vignette over video */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              'radial-gradient(ellipse 80% 70% at 50% 50%, transparent 0%, rgba(7,7,13,0.72) 60%, rgba(7,7,13,0.97) 100%)',
-          }}
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'linear-gradient(to bottom, rgba(7,7,13,0.5) 0%, transparent 25%, transparent 72%, rgba(7,7,13,0.9) 100%)',
+              'radial-gradient(ellipse 80% 70% at 50% 50%, transparent 0%, rgba(7,7,13,0.55) 60%, rgba(7,7,13,0.95) 100%)',
           }}
         />
       </div>
