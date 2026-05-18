@@ -81,7 +81,7 @@ export const HeroUI: React.FC<HeroUIProps> = ({ product, onNext, onPrev, scrollR
 
           <div className="w-full px-6 md:px-16 pb-6 md:pb-12 flex flex-col md:flex-row items-center md:items-end justify-between gap-6 mt-auto md:mt-0 pointer-events-none">
             <div className="flex flex-col gap-2 w-full md:w-auto text-center md:text-right pointer-events-auto items-center md:items-start">
-              <div key={`price-${product.id}`} ref={priceRef} className="font-sans text-6xl md:text-5xl font-light tracking-wide drop-shadow-2xl" style={{ color: product.accentColor }}>${product.price}</div>
+              <div key={`price-${product.id}`} ref={priceRef} className="font-sans text-6xl md:text-5xl font-light tracking-wide drop-shadow-2xl" style={{ color: product.accentColor }}>₪{product.price}</div>
               <div className="text-gray-400 text-xs tracking-wider uppercase font-medium flex items-center gap-2 font-hebrew">מידה: <span className="text-white">29.5"</span> <span className="w-1 h-1 bg-white/50 rounded-full"></span> רשמי</div>
             </div>
 
@@ -127,9 +127,9 @@ export const HeroUI: React.FC<HeroUIProps> = ({ product, onNext, onPrev, scrollR
           <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-white/5"></div>
         </div>
 
-        {/* Text panel — mobile: bottom strip | desktop: right side */}
+        {/* Text panel — right side always (ball is on left) */}
         <div
-          className="absolute inset-x-4 bottom-6 md:bottom-auto md:right-14 md:left-auto md:inset-x-auto md:inset-y-0 md:w-[42%] flex flex-col justify-end md:justify-center gap-4 md:gap-8 pb-2 md:py-20 pointer-events-auto"
+          className="absolute right-4 md:right-14 inset-y-0 w-[47%] md:w-[42%] flex flex-col justify-center gap-4 md:gap-8 py-20 pointer-events-auto"
           dir="rtl"
         >
           <div className="animate-item transition-all duration-1000 opacity-0 translate-y-8 delay-100">
@@ -137,7 +137,7 @@ export const HeroUI: React.FC<HeroUIProps> = ({ product, onNext, onPrev, scrollR
               <span className="w-2 h-2 rounded-full bg-brand-orange shrink-0"></span>
               <span className="text-[10px] font-mono text-brand-orange tracking-widest font-hebrew uppercase">מדדי ביצועים</span>
             </div>
-            <h2 className="font-display text-3xl md:text-7xl lg:text-8xl text-white leading-[0.9] tracking-tight font-hebrew uppercase">
+            <h2 className="font-display text-2xl md:text-7xl lg:text-8xl text-white leading-[0.9] tracking-tight font-hebrew uppercase">
               שליטה<br />אבסולוטית
             </h2>
           </div>
@@ -209,9 +209,9 @@ export const HeroUI: React.FC<HeroUIProps> = ({ product, onNext, onPrev, scrollR
           </svg>
         </div>
 
-        {/* Text panel — mobile: bottom strip | desktop: left side */}
+        {/* Text panel — left side always (ball is on right) */}
         <div
-          className="absolute inset-x-4 bottom-6 md:bottom-auto md:left-14 md:right-auto md:inset-x-auto md:inset-y-0 md:w-[42%] flex flex-col justify-end md:justify-center gap-4 md:gap-8 pb-2 md:py-20 pointer-events-auto"
+          className="absolute left-4 md:left-14 inset-y-0 w-[47%] md:w-[42%] flex flex-col justify-center gap-4 md:gap-8 py-20 pointer-events-auto"
           dir="rtl"
         >
           <div className="animate-item transition-all duration-1000 opacity-0 translate-y-8 delay-100">
@@ -222,7 +222,7 @@ export const HeroUI: React.FC<HeroUIProps> = ({ product, onNext, onPrev, scrollR
               <span className="w-2 h-2 rounded-full bg-white/40 shrink-0"></span>
               <span className="text-[10px] font-mono text-white/50 tracking-widest font-hebrew uppercase">אווירודינמיקה</span>
             </div>
-            <h2 className="font-display text-3xl md:text-7xl lg:text-8xl text-white leading-[0.9] font-hebrew">
+            <h2 className="font-display text-2xl md:text-7xl lg:text-8xl text-white leading-[0.9] font-hebrew">
               מעוף<br />מושלם
             </h2>
           </div>
@@ -310,7 +310,7 @@ export const HeroUI: React.FC<HeroUIProps> = ({ product, onNext, onPrev, scrollR
         </div>
         <div className="absolute bottom-[20%] right-6 md:bottom-[25%] md:right-[10%] pointer-events-auto animate-item opacity-0 translate-x-5 transition-all duration-700 delay-300 text-right">
           <div className="border-r-2 border-white pr-4">
-            <div className="text-3xl text-white font-bold tracking-tighter">אחיזה גבוהה</div>
+            <div className="text-3xl text-white font-bold tracking-tighter whitespace-nowrap">אחיזה גבוהה</div>
             <div className="text-xs text-gray-400 uppercase tracking-widest font-hebrew">מפרט ציפוי</div>
           </div>
         </div>
@@ -353,7 +353,7 @@ export const HeroUI: React.FC<HeroUIProps> = ({ product, onNext, onPrev, scrollR
       </div>
 
       {/* --- SECTION 6: FOOTER --- */}
-      <div className="relative w-full h-full min-h-full flex flex-col items-center justify-center pb-20 pointer-events-none snap-start overflow-hidden">
+      <div className="relative w-full h-full min-h-full flex flex-col items-center justify-end pb-8 pointer-events-none snap-start overflow-hidden">
         <div className="z-20 pointer-events-auto text-center flex flex-col items-center justify-center w-full px-6 max-w-7xl mx-auto">
           <div className="animate-item transition-all duration-1000 opacity-0 translate-y-10 delay-100 relative w-full">
             <div className="inline-block px-4 py-1 border border-brand-orange rounded-full text-[10px] font-mono text-brand-orange tracking-widest mb-10 bg-black/50 backdrop-blur-sm font-hebrew">
@@ -363,7 +363,7 @@ export const HeroUI: React.FC<HeroUIProps> = ({ product, onNext, onPrev, scrollR
             <h3 className="flex flex-col items-center justify-center text-[15vw] md:text-[9rem] font-display uppercase tracking-tight leading-[0.8] mb-8 drop-shadow-2xl font-hebrew">
               <span className="text-outline text-transparent" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.2)' }}>לנצח את</span>
               <span className="text-white font-bold relative flex items-center gap-2">
-                המשיכה<span className="text-brand-orange">.</span>
+                המשחק<span className="text-brand-orange">.</span>
               </span>
             </h3>
 
