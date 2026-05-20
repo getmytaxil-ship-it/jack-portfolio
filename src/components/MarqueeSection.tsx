@@ -8,10 +8,8 @@ const VIDEO_MAP_ROW1: Record<number, string> = {
 }
 const VIDEO_MAP_ROW2: Record<number, string> = {
   0: `${import.meta.env.BASE_URL}videos/tile_03.mp4`,
+  4: `${import.meta.env.BASE_URL}videos/yaar.mp4`,
 }
-
-// Index in row2 that shows the animated UrbanJungle tile
-const URBAN_ROW2 = 4
 
 const row1Images = [
   null, // 0 — video tile_01
@@ -32,7 +30,7 @@ const row2Images = [
   'https://motionsites.ai/assets/hero-xportfolio-preview-D4A8maiC.gif',
   'https://motionsites.ai/assets/hero-orbit-web3-preview-BXt4OttD.gif',
   'https://motionsites.ai/assets/hero-nexora-preview-cx5HmUgo.gif',
-  'https://motionsites.ai/assets/hero-evr-ventures-preview-DZxeVFEX.gif',
+  null, // 4 — video yaar.mp4
   'https://motionsites.ai/assets/hero-planet-orbit-preview-DWAP8Z1P.gif',
   'https://motionsites.ai/assets/hero-new-era-preview-CocuDUm9.gif',
   'https://motionsites.ai/assets/hero-wealth-preview-B70idl_u.gif',
@@ -163,7 +161,7 @@ export default function MarqueeSection() {
               <Tile
                 key={i}
                 src={src}
-                isUrban={i === URBAN_ROW2}
+                isUrban={false}
                 videoSrc={VIDEO_MAP_ROW2[i]}
                 w={w}
                 h={h}
@@ -213,7 +211,7 @@ export default function MarqueeSection() {
             <Tile
               key={i}
               src={src}
-              isUrban={idx === URBAN_ROW2}
+              isUrban={false}
               videoSrc={VIDEO_MAP_ROW2[idx]}
               w={w}
               h={h}
