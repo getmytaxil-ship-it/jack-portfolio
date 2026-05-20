@@ -77,12 +77,12 @@ export const BackgroundTitle: React.FC<BackgroundTitleProps> = ({ product, scrol
   }, [scrollRef]);
 
   return (
-    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
+    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none" dir="ltr">
       <div className="absolute inset-0 flex flex-col items-center justify-center translate-y-[6vh] md:translate-y-0">
         <h1
           key={`title-dt-${product.id}`}
           className="font-display font-bold text-white mix-blend-overlay w-full text-center flex flex-col items-center leading-[0.82] tracking-wider"
-          style={{ fontSize: 'clamp(4rem, 30vw, 22rem)' }}
+          style={{ fontSize: 'clamp(3rem, 22vw, 22rem)' }}
         >
           <span className="block w-full text-center">
             <CinematicText text={product.namePart1} delay={0} />
