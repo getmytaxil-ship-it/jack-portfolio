@@ -72,9 +72,8 @@ function Tile({
   h: number
   rounded: string
 }) {
-  // video overrides everything else — height follows 16:9 to prevent cropping
+  // video tile — same height as image tiles, cropped from the top so headers are visible
   if (videoSrc) {
-    const videoH = Math.round(w * 9 / 16)
     return (
       <video
         src={videoSrc}
@@ -82,8 +81,8 @@ function Tile({
         autoPlay
         loop
         playsInline
-        className={`flex-shrink-0 object-cover ${rounded}`}
-        style={{ width: w, height: videoH }}
+        className={`flex-shrink-0 object-cover object-top ${rounded}`}
+        style={{ width: w, height: h }}
       />
     )
   }
