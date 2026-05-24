@@ -1,17 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
 import UrbanJungleTile from './UrbanJungleTile'
 
-// ── Row 1: Hebrew videos only ─────────────────────────────────────────────
+// ── Row 1: Hebrew videos — square-looking first, wide/long last ───────────
 const VIDEO_MAP_ROW1: Record<number, string> = {
-  0: `${import.meta.env.BASE_URL}videos/0518.mp4`,
-  1: `${import.meta.env.BASE_URL}videos/site5.mp4`,
+  0: `${import.meta.env.BASE_URL}videos/yaar.mp4`,
+  1: `${import.meta.env.BASE_URL}videos/tile_03.mp4`,
   2: `${import.meta.env.BASE_URL}videos/site3.mp4`,
-  3: `${import.meta.env.BASE_URL}videos/site6.mp4`,
-  4: `${import.meta.env.BASE_URL}videos/site4.mp4`,
-  5: `${import.meta.env.BASE_URL}videos/new_site_web.mp4`,
-  6: `${import.meta.env.BASE_URL}videos/site2.mp4`,
-  7: `${import.meta.env.BASE_URL}videos/tile_03.mp4`,
-  8: `${import.meta.env.BASE_URL}videos/yaar.mp4`,
+  3: `${import.meta.env.BASE_URL}videos/site4.mp4`,
+  4: `${import.meta.env.BASE_URL}videos/site6.mp4`,
+  5: `${import.meta.env.BASE_URL}videos/0518.mp4`,
+  6: `${import.meta.env.BASE_URL}videos/site5.mp4`,
+  7: `${import.meta.env.BASE_URL}videos/site2.mp4`,
+  8: `${import.meta.env.BASE_URL}videos/new_site_web.mp4`,
 }
 
 // ── Row 2: English GIFs only ──────────────────────────────────────────────
@@ -44,6 +44,7 @@ const row2Images = [
   'https://motionsites.ai/assets/hero-luminex-preview-CxOP7ce6.gif',
   'https://motionsites.ai/assets/hero-celestia-preview-0yO3jXO8.gif',
 ]
+
 
 const row1Desktop = [...row1Images, ...row1Images, ...row1Images]
 const row2Desktop = [...row2Images, ...row2Images, ...row2Images]
