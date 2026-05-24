@@ -4,7 +4,7 @@ import UrbanJungleTile from './UrbanJungleTile'
 // Video overrides — index → local video path
 const VIDEO_MAP_ROW1: Record<number, string> = {
   0: `${import.meta.env.BASE_URL}videos/0518.mp4`,
-  5: `${import.meta.env.BASE_URL}videos/new_site.mp4`,
+  5: `${import.meta.env.BASE_URL}videos/new_site_web.mp4`,
 }
 const VIDEO_MAP_ROW2: Record<number, string> = {
   0: `${import.meta.env.BASE_URL}videos/tile_03.mp4`,

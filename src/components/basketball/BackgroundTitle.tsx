@@ -77,7 +77,7 @@ export const BackgroundTitle: React.FC<BackgroundTitleProps> = ({ product, scrol
   }, [scrollRef]);
 
   return (
-    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none" dir="ltr">
+    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
       <div className="absolute inset-0 flex flex-col items-center justify-center translate-y-[6vh] md:translate-y-0">
         <h1
           key={`title-dt-${product.id}`}
