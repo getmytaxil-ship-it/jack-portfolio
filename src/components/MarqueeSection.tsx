@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import UrbanJungleTile from './UrbanJungleTile'
 
-// Video overrides — index → local video path
+// ── Row 1: Hebrew videos only ─────────────────────────────────────────────
 const VIDEO_MAP_ROW1: Record<number, string> = {
   0: `${import.meta.env.BASE_URL}videos/0518.mp4`,
   1: `${import.meta.env.BASE_URL}videos/site5.mp4`,
@@ -9,33 +9,35 @@ const VIDEO_MAP_ROW1: Record<number, string> = {
   3: `${import.meta.env.BASE_URL}videos/site6.mp4`,
   4: `${import.meta.env.BASE_URL}videos/site4.mp4`,
   5: `${import.meta.env.BASE_URL}videos/new_site_web.mp4`,
-  7: `${import.meta.env.BASE_URL}videos/site2.mp4`,
-}
-const VIDEO_MAP_ROW2: Record<number, string> = {
-  0: `${import.meta.env.BASE_URL}videos/tile_03.mp4`,
-  4: `${import.meta.env.BASE_URL}videos/yaar.mp4`,
+  6: `${import.meta.env.BASE_URL}videos/site2.mp4`,
+  7: `${import.meta.env.BASE_URL}videos/tile_03.mp4`,
+  8: `${import.meta.env.BASE_URL}videos/yaar.mp4`,
 }
 
+// ── Row 2: English GIFs only ──────────────────────────────────────────────
+const VIDEO_MAP_ROW2: Record<number, string> = {}
+
 const row1Images = [
-  null, // 0 — video 0518.mp4 (solar)
-  null, // 1 — video site5.mp4 (ליד סולארי)
-  null, // 2 — video site3.mp4 (זרוע)
-  null, // 3 — video site6.mp4 (ליד זרוע)
-  null, // 4 — video site4.mp4
-  null, // 5 — video new_site.mp4
-  'https://motionsites.ai/assets/hero-vitara-preview-Cjz2QYyU.gif',
-  null, // 7 — video site2.mp4
-  'https://motionsites.ai/assets/hero-skyelite-preview-DHaZIgUv.gif',
-  'https://motionsites.ai/assets/hero-aethera-preview-DknSlcTa.gif',
-  'https://motionsites.ai/assets/hero-designpro-preview-D8c5_een.gif',
+  null, // 0 — 0518.mp4 (solar)
+  null, // 1 — site5.mp4
+  null, // 2 — site3.mp4 (זרוע)
+  null, // 3 — site6.mp4
+  null, // 4 — site4.mp4
+  null, // 5 — new_site_web.mp4
+  null, // 6 — site2.mp4
+  null, // 7 — tile_03.mp4
+  null, // 8 — yaar.mp4
 ]
 
 const row2Images = [
+  'https://motionsites.ai/assets/hero-vitara-preview-Cjz2QYyU.gif',
+  'https://motionsites.ai/assets/hero-skyelite-preview-DHaZIgUv.gif',
+  'https://motionsites.ai/assets/hero-aethera-preview-DknSlcTa.gif',
+  'https://motionsites.ai/assets/hero-designpro-preview-D8c5_een.gif',
   'https://motionsites.ai/assets/hero-stellar-ai-preview-D3HL6bw1.gif',
   'https://motionsites.ai/assets/hero-xportfolio-preview-D4A8maiC.gif',
   'https://motionsites.ai/assets/hero-orbit-web3-preview-BXt4OttD.gif',
   'https://motionsites.ai/assets/hero-nexora-preview-cx5HmUgo.gif',
-  null, // 4 — video yaar.mp4
   'https://motionsites.ai/assets/hero-planet-orbit-preview-DWAP8Z1P.gif',
   'https://motionsites.ai/assets/hero-new-era-preview-CocuDUm9.gif',
   'https://motionsites.ai/assets/hero-wealth-preview-B70idl_u.gif',
