@@ -4,7 +4,9 @@ import UrbanJungleTile from './UrbanJungleTile'
 // Video overrides — index → local video path
 const VIDEO_MAP_ROW1: Record<number, string> = {
   0: `${import.meta.env.BASE_URL}videos/0518.mp4`,
+  1: `${import.meta.env.BASE_URL}videos/site5.mp4`,
   2: `${import.meta.env.BASE_URL}videos/site3.mp4`,
+  3: `${import.meta.env.BASE_URL}videos/site6.mp4`,
   4: `${import.meta.env.BASE_URL}videos/site4.mp4`,
   5: `${import.meta.env.BASE_URL}videos/new_site_web.mp4`,
   7: `${import.meta.env.BASE_URL}videos/site2.mp4`,
@@ -16,9 +18,9 @@ const VIDEO_MAP_ROW2: Record<number, string> = {
 
 const row1Images = [
   null, // 0 — video 0518.mp4 (solar)
-  'https://motionsites.ai/assets/hero-codenest-preview-Cgppc2qV.gif',
+  null, // 1 — video site5.mp4 (ליד סולארי)
   null, // 2 — video site3.mp4 (זרוע)
-  'https://motionsites.ai/assets/hero-stellar-ai-v2-preview-DjvxjG3C.gif',
+  null, // 3 — video site6.mp4 (ליד זרוע)
   null, // 4 — video site4.mp4
   null, // 5 — video new_site.mp4
   'https://motionsites.ai/assets/hero-vitara-preview-Cjz2QYyU.gif',
