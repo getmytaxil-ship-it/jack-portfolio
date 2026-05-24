@@ -4,7 +4,9 @@ import UrbanJungleTile from './UrbanJungleTile'
 // Video overrides — index → local video path
 const VIDEO_MAP_ROW1: Record<number, string> = {
   0: `${import.meta.env.BASE_URL}videos/0518.mp4`,
+  3: `${import.meta.env.BASE_URL}videos/site1.mp4`,
   5: `${import.meta.env.BASE_URL}videos/new_site_web.mp4`,
+  7: `${import.meta.env.BASE_URL}videos/site2.mp4`,
 }
 const VIDEO_MAP_ROW2: Record<number, string> = {
   0: `${import.meta.env.BASE_URL}videos/tile_03.mp4`,
@@ -15,11 +17,11 @@ const row1Images = [
   null, // 0 — video 0518.mp4 (solar)
   'https://motionsites.ai/assets/hero-codenest-preview-Cgppc2qV.gif',
   'https://motionsites.ai/assets/hero-vex-ventures-preview-BczMFIiw.gif',
-  'https://motionsites.ai/assets/hero-stellar-ai-v2-preview-DjvxjG3C.gif',
+  null, // 3 — video site1.mp4
   'https://motionsites.ai/assets/hero-asme-preview-B_nGDnTP.gif',
   null, // 5 — video new_site.mp4
   'https://motionsites.ai/assets/hero-vitara-preview-Cjz2QYyU.gif',
-  'https://motionsites.ai/assets/hero-terra-preview-BFjrCr7T.gif',
+  null, // 7 — video site2.mp4
   'https://motionsites.ai/assets/hero-skyelite-preview-DHaZIgUv.gif',
   'https://motionsites.ai/assets/hero-aethera-preview-DknSlcTa.gif',
   'https://motionsites.ai/assets/hero-designpro-preview-D8c5_een.gif',
