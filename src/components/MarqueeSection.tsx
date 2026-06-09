@@ -3,30 +3,24 @@ import UrbanJungleTile from './UrbanJungleTile'
 
 // ── Row 1: Hebrew videos ──────────────────────────────────────────────────
 const VIDEO_MAP_ROW1: Record<number, string> = {
-  0: `${import.meta.env.BASE_URL}videos/yaar.mp4`,
-  1: `${import.meta.env.BASE_URL}videos/tile_03.mp4`,
-  2: `${import.meta.env.BASE_URL}videos/site5.mp4`,
-  3: `${import.meta.env.BASE_URL}videos/site3.mp4`,
-  4: `${import.meta.env.BASE_URL}videos/site6.mp4`,
-  5: `${import.meta.env.BASE_URL}videos/site4.mp4`,
-  6: `${import.meta.env.BASE_URL}videos/solar.mp4`,
-  7: `${import.meta.env.BASE_URL}videos/site2.mp4`,
-  8: `${import.meta.env.BASE_URL}videos/new_site_web.mp4`,
+  0: `${import.meta.env.BASE_URL}videos/v0609_1.mp4`,
+  1: `${import.meta.env.BASE_URL}videos/yaar.mp4`,
+  2: `${import.meta.env.BASE_URL}videos/tile_03.mp4`,
+  3: `${import.meta.env.BASE_URL}videos/site5.mp4`,
+  4: `${import.meta.env.BASE_URL}videos/site3.mp4`,
+  5: `${import.meta.env.BASE_URL}videos/site6.mp4`,
+  6: `${import.meta.env.BASE_URL}videos/site4.mp4`,
+  7: `${import.meta.env.BASE_URL}videos/v0609.mp4`,
+  8: `${import.meta.env.BASE_URL}videos/site2.mp4`,
+  9: `${import.meta.env.BASE_URL}videos/new_site_web.mp4`,
 }
 
 // ── Row 2: English GIFs only ──────────────────────────────────────────────
 const VIDEO_MAP_ROW2: Record<number, string> = {}
 
 const row1Images = [
-  null, // 0 — 0518.mp4 (solar)
-  null, // 1 — site5.mp4
-  null, // 2 — site3.mp4 (זרוע)
-  null, // 3 — site6.mp4
-  null, // 4 — site4.mp4
-  null, // 5 — new_site_web.mp4
-  null, // 6 — site2.mp4
-  null, // 7 — tile_03.mp4
-  null, // 8 — yaar.mp4
+  null, null, null, null, null,
+  null, null, null, null, null,
 ]
 
 const row2Images = [
@@ -138,7 +132,7 @@ export default function MarqueeSection() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [isMobile])
 
-  const labelClass = 'text-white/25 text-[9px] sm:text-[10px] uppercase tracking-[0.4em] mb-2 sm:mb-3 px-4 sm:px-6'
+  const labelClass = 'text-white/60 text-xs sm:text-sm font-semibold tracking-[0.3em] mb-3 sm:mb-4 px-4 sm:px-6 uppercase'
 
   // ── Mobile ────────────────────────────────────────────────────────────────
   if (isMobile) {

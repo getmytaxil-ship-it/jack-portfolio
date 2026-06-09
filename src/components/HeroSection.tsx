@@ -156,7 +156,7 @@ export default function HeroSection() {
 
         {/* Trust */}
         <motion.p
-          className="text-[#111]/20 text-[10px] mt-6"
+          className="text-[#111]/50 text-xs sm:text-sm font-medium mt-6 tracking-wide"
           style={HEEBO}
           {...up(0.66)}
         >
