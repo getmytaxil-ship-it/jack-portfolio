@@ -3,11 +3,11 @@ import UrbanJungleTile from './UrbanJungleTile'
 
 // ── Row 1: Hebrew videos ──────────────────────────────────────────────────
 const VIDEO_MAP_ROW1: Record<number, string> = {
-  0: `${import.meta.env.BASE_URL}videos/v0609_1.mp4`,
-  1: `${import.meta.env.BASE_URL}videos/yaar.mp4`,
-  2: `${import.meta.env.BASE_URL}videos/tile_03.mp4`,
-  3: `${import.meta.env.BASE_URL}videos/site5.mp4`,
-  4: `${import.meta.env.BASE_URL}videos/site3.mp4`,
+  0: `${import.meta.env.BASE_URL}videos/yaar.mp4`,
+  1: `${import.meta.env.BASE_URL}videos/tile_03.mp4`,
+  2: `${import.meta.env.BASE_URL}videos/site5.mp4`,
+  3: `${import.meta.env.BASE_URL}videos/site3.mp4`,
+  4: `${import.meta.env.BASE_URL}videos/v0609_1.mp4`,
   5: `${import.meta.env.BASE_URL}videos/site6.mp4`,
   6: `${import.meta.env.BASE_URL}videos/site4.mp4`,
   7: `${import.meta.env.BASE_URL}videos/v0609.mp4`,
