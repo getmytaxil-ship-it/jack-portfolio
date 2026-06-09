@@ -146,7 +146,7 @@ export default function HeroSection() {
             בואו נדבר
           </a>
           <a
-            href="#projects"
+            href="#marquee"
             className="rounded-full border border-black/15 text-[#111]/55 hover:text-[#111] hover:border-black/30 font-medium text-sm px-8 py-3 sm:px-9 sm:py-3.5 cursor-pointer transition-colors duration-200"
             style={HEEBO}
           >

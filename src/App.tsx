@@ -6,6 +6,8 @@ import WhyUsSection       from './components/WhyUsSection'
 import AboutSection       from './components/AboutSection'
 import ServicesSection    from './components/ServicesSection'
 import ProjectsSection    from './components/ProjectsSection'
+import ContactSection     from './components/ContactSection'
+import FloatingWhatsApp   from './components/FloatingWhatsApp'
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
       <AboutSection />
       <ServicesSection />
       <ProjectsSection />
+      <ContactSection />
+      <FloatingWhatsApp />
     </div>
   )
 }

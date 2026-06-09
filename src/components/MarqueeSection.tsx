@@ -9,7 +9,7 @@ const VIDEO_MAP_ROW1: Record<number, string> = {
   3: `${import.meta.env.BASE_URL}videos/site3.mp4`,
   4: `${import.meta.env.BASE_URL}videos/site6.mp4`,
   5: `${import.meta.env.BASE_URL}videos/site4.mp4`,
-  6: `${import.meta.env.BASE_URL}videos/0518.mp4`,
+  6: `${import.meta.env.BASE_URL}videos/solar.mp4`,
   7: `${import.meta.env.BASE_URL}videos/site2.mp4`,
   8: `${import.meta.env.BASE_URL}videos/new_site_web.mp4`,
 }
@@ -138,15 +138,18 @@ export default function MarqueeSection() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [isMobile])
 
+  const labelClass = 'text-white/25 text-[9px] sm:text-[10px] uppercase tracking-[0.4em] mb-2 sm:mb-3 px-4 sm:px-6'
+
   // ── Mobile ────────────────────────────────────────────────────────────────
   if (isMobile) {
     return (
-      <section ref={sectionRef} className="bg-[#0C0C0C] pt-16 pb-6" dir="ltr">
+      <section id="marquee" ref={sectionRef} className="bg-[#0C0C0C] pt-16 pb-6" dir="ltr">
         <p className="text-white/25 text-[10px] text-center mb-3 tracking-widest uppercase">
           החלק לצפייה
         </p>
 
-        <div className="overflow-x-auto scrollbar-hide mb-2" style={{ paddingInline: 16, cursor: 'grab' }}>
+        <p className={labelClass} dir="rtl">אתרים בעברית</p>
+        <div className="overflow-x-auto scrollbar-hide mb-8" style={{ paddingInline: 16, cursor: 'grab' }}>
           <div className="flex" style={{ gap, width: 'max-content' }}>
             {row1Images.map((src, i) => (
               <Tile
@@ -162,6 +165,7 @@ export default function MarqueeSection() {
           </div>
         </div>
 
+        <p className={labelClass} dir="rtl">אתרים באנגלית</p>
         <div className="overflow-x-auto scrollbar-hide" style={{ paddingInline: 16, cursor: 'grab' }}>
           <div className="flex" style={{ gap, width: 'max-content' }}>
             {row2Images.map((src, i) => (
@@ -184,12 +188,14 @@ export default function MarqueeSection() {
   // ── Desktop ───────────────────────────────────────────────────────────────
   return (
     <section
+      id="marquee"
       ref={sectionRef}
       className="bg-[#0C0C0C] pt-6 sm:pt-8 md:pt-12 pb-6 sm:pb-10 overflow-hidden"
       dir="ltr"
     >
+      <p className={labelClass} dir="rtl">אתרים בעברית</p>
       <div
-        className="flex mb-2 sm:mb-3"
+        className="flex mb-10 sm:mb-14"
         style={{ gap, transform: `translateX(${offset - 200}px)`, willChange: 'transform' }}
       >
         {row1Desktop.map((src, i) => {
@@ -208,6 +214,7 @@ export default function MarqueeSection() {
         })}
       </div>
 
+      <p className={labelClass} dir="rtl">אתרים באנגלית</p>
       <div
         className="flex"
         style={{ gap, transform: `translateX(${-(offset - 200)}px)`, willChange: 'transform' }}
